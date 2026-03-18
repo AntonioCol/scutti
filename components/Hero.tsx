@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { heroImages } from "@/data/collezioni";
+import { Button } from "@/components/ui/button";
 
 export default function Hero() {
   const [current, setCurrent] = useState(0);
@@ -51,7 +52,7 @@ export default function Hero() {
             key={i}
             onClick={() => setCurrent(i)}
             className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-              i === current ? "bg-[#EF8C00] w-4" : "bg-white/40"
+              i === current ? "bg-primary w-4" : "bg-white/40"
             }`}
             aria-label={`Slide ${i + 1}`}
           />
@@ -64,7 +65,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-xs tracking-[0.3em] uppercase mb-6 text-[#EF8C00] font-medium"
+          className="text-xs tracking-[0.3em] uppercase mb-6 text-primary font-medium"
         >
           Villa Santa Maria · Abruzzo · Dal 1970
         </motion.p>
@@ -95,18 +96,12 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 1 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <a
-            href="#collezioni"
-            className="bg-[#EF8C00] text-white text-xs tracking-[0.2em] uppercase px-8 py-4 hover:bg-[#D87C00] transition-colors duration-300"
-          >
-            Scopri le Collezioni
-          </a>
-          <a
-            href="#contatti"
-            className="border border-white text-white text-xs tracking-[0.2em] uppercase px-8 py-4 hover:bg-white hover:text-[#2B2B2B] transition-all duration-300"
-          >
-            Contattaci
-          </a>
+          <Button asChild>
+            <a href="#collezioni">Scopri le Collezioni</a>
+          </Button>
+          <Button variant="outlineWhite" asChild>
+            <a href="#contatti">Contattaci</a>
+          </Button>
         </motion.div>
       </div>
 

@@ -3,6 +3,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
 export default function Contatti() {
   const [sent, setSent] = useState(false);
@@ -14,7 +18,7 @@ export default function Contatti() {
   };
 
   return (
-    <section id="contatti" className="py-24 md:py-32 bg-[#F5F2ED]">
+    <section id="contatti" className="py-24 md:py-32 bg-sand">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <motion.div
@@ -24,13 +28,13 @@ export default function Contatti() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <p className="text-xs tracking-[0.3em] uppercase text-[#EF8C00] font-medium mb-4">
+          <p className="text-xs tracking-[0.3em] uppercase text-primary font-medium mb-4">
             Siamo a tua disposizione
           </p>
-          <h2 className="font-script text-5xl md:text-6xl font-normal text-[#2B2B2B]">
+          <h2 className="font-script text-5xl md:text-6xl font-normal text-dark">
             <span className="font-script">Contattaci</span>
           </h2>
-          <div className="w-12 h-[1px] bg-[#EF8C00] mx-auto mt-6" />
+          <div className="w-12 h-[1px] bg-primary mx-auto mt-6" />
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
@@ -44,10 +48,10 @@ export default function Contatti() {
             {/* Contact info */}
             <div className="space-y-5 mb-10">
               <div className="flex items-start gap-4">
-                <MapPin size={18} className="text-[#EF8C00] mt-0.5 shrink-0" />
+                <MapPin size={18} className="text-primary mt-0.5 shrink-0" />
                 <div>
-                  <p className="text-sm font-medium text-[#2B2B2B]">Indirizzo</p>
-                  <p className="text-sm text-[#6B6B6B] mt-1 leading-relaxed">
+                  <p className="text-sm font-medium text-dark">Indirizzo</p>
+                  <p className="text-sm text-midgray mt-1 leading-relaxed">
                     Scutti Gilberto S.r.l.<br />
                     C.da Poggio, 25<br />
                     66047 Villa Santa Maria (CH) — Abruzzo
@@ -55,27 +59,27 @@ export default function Contatti() {
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <Phone size={18} className="text-[#EF8C00] mt-0.5 shrink-0" />
+                <Phone size={18} className="text-primary mt-0.5 shrink-0" />
                 <div>
-                  <p className="text-sm font-medium text-[#2B2B2B]">Telefono</p>
-                  <p className="text-sm text-[#6B6B6B] mt-1">
-                    <a href="tel:0872944160" className="hover:text-[#EF8C00] transition-colors">
+                  <p className="text-sm font-medium text-dark">Telefono</p>
+                  <p className="text-sm text-midgray mt-1">
+                    <a href="tel:0872944160" className="hover:text-primary transition-colors">
                       0872.944160
                     </a>
                     {" "}·{" "}
-                    <a href="tel:3345062792" className="hover:text-[#EF8C00] transition-colors">
+                    <a href="tel:3345062792" className="hover:text-primary transition-colors">
                       334.5062792
                     </a>
                   </p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <Mail size={18} className="text-[#EF8C00] mt-0.5 shrink-0" />
+                <Mail size={18} className="text-primary mt-0.5 shrink-0" />
                 <div>
-                  <p className="text-sm font-medium text-[#2B2B2B]">Email</p>
+                  <p className="text-sm font-medium text-dark">Email</p>
                   <a
                     href="mailto:info@scutti.it"
-                    className="text-sm text-[#6B6B6B] hover:text-[#EF8C00] transition-colors mt-1 block"
+                    className="text-sm text-midgray hover:text-primary transition-colors mt-1 block"
                   >
                     info@scutti.it
                   </a>
@@ -84,21 +88,22 @@ export default function Contatti() {
             </div>
 
             {/* WhatsApp */}
-            <a
-              href="https://wa.me/393345062792"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 bg-[#25D366] text-white text-xs tracking-[0.15em] uppercase px-6 py-3 hover:bg-[#1eba57] transition-colors duration-300 mb-10"
-            >
-              <MessageCircle size={16} />
-              Scrivici su WhatsApp
-            </a>
+            <Button variant="whatsapp" size="sm" asChild className="mb-10">
+              <a
+                href="https://wa.me/393345062792"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MessageCircle size={16} />
+                Scrivici su WhatsApp
+              </a>
+            </Button>
 
             {/* Form */}
             {sent ? (
-              <div className="border border-[#EF8C00] p-8 text-center">
-                <p className="font-script text-2xl text-[#2B2B2B] mb-2">Grazie!</p>
-                <p className="text-sm text-[#6B6B6B]">
+              <div className="border border-primary p-8 text-center">
+                <p className="font-script text-2xl text-dark mb-2">Grazie!</p>
+                <p className="text-sm text-midgray">
                   Il tuo messaggio è stato inviato. Ti risponderemo al più presto.
                 </p>
               </div>
@@ -106,59 +111,48 @@ export default function Contatti() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-xs tracking-[0.1em] uppercase text-[#6B6B6B] block mb-1">
-                      Nome *
-                    </label>
-                    <input
+                    <Label htmlFor="nome">Nome *</Label>
+                    <Input
+                      id="nome"
                       type="text"
                       required
                       value={form.nome}
                       onChange={(e) => setForm({ ...form, nome: e.target.value })}
-                      className="w-full border border-[#e0dbd3] bg-white px-4 py-3 text-sm text-[#2B2B2B] focus:outline-none focus:border-[#EF8C00] transition-colors"
                     />
                   </div>
                   <div>
-                    <label className="text-xs tracking-[0.1em] uppercase text-[#6B6B6B] block mb-1">
-                      Telefono
-                    </label>
-                    <input
+                    <Label htmlFor="telefono">Telefono</Label>
+                    <Input
+                      id="telefono"
                       type="tel"
                       value={form.telefono}
                       onChange={(e) => setForm({ ...form, telefono: e.target.value })}
-                      className="w-full border border-[#e0dbd3] bg-white px-4 py-3 text-sm text-[#2B2B2B] focus:outline-none focus:border-[#EF8C00] transition-colors"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="text-xs tracking-[0.1em] uppercase text-[#6B6B6B] block mb-1">
-                    Email *
-                  </label>
-                  <input
+                  <Label htmlFor="email">Email *</Label>
+                  <Input
+                    id="email"
                     type="email"
                     required
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full border border-[#e0dbd3] bg-white px-4 py-3 text-sm text-[#2B2B2B] focus:outline-none focus:border-[#EF8C00] transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="text-xs tracking-[0.1em] uppercase text-[#6B6B6B] block mb-1">
-                    Messaggio *
-                  </label>
-                  <textarea
+                  <Label htmlFor="messaggio">Messaggio *</Label>
+                  <Textarea
+                    id="messaggio"
                     required
                     rows={4}
                     value={form.messaggio}
                     onChange={(e) => setForm({ ...form, messaggio: e.target.value })}
-                    className="w-full border border-[#e0dbd3] bg-white px-4 py-3 text-sm text-[#2B2B2B] focus:outline-none focus:border-[#EF8C00] transition-colors resize-none"
                   />
                 </div>
-                <button
-                  type="submit"
-                  className="w-full bg-[#2B2B2B] text-white text-xs tracking-[0.2em] uppercase py-4 hover:bg-[#EF8C00] transition-colors duration-300"
-                >
+                <Button variant="dark" type="submit" className="w-full">
                   Invia Messaggio
-                </button>
+                </Button>
               </form>
             )}
           </motion.div>
@@ -183,20 +177,20 @@ export default function Contatti() {
                 title="Mappa Scutti"
               />
             </div>
-            <div className="bg-white border border-[#e0dbd3] p-6">
-              <p className="text-xs tracking-[0.2em] uppercase text-[#EF8C00] mb-3">Orari showroom</p>
-              <div className="space-y-1 text-sm text-[#6B6B6B]">
+            <div className="bg-white border border-input p-6">
+              <p className="text-xs tracking-[0.2em] uppercase text-primary mb-3">Orari showroom</p>
+              <div className="space-y-1 text-sm text-midgray">
                 <div className="flex justify-between">
                   <span>Lunedì – Venerdì</span>
-                  <span className="font-medium text-[#2B2B2B]">9:00 – 13:00 / 15:00 – 19:00</span>
+                  <span className="font-medium text-dark">9:00 – 13:00 / 15:00 – 19:00</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Sabato</span>
-                  <span className="font-medium text-[#2B2B2B]">9:00 – 13:00</span>
+                  <span className="font-medium text-dark">9:00 – 13:00</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Domenica</span>
-                  <span className="font-medium text-[#2B2B2B]">Chiuso</span>
+                  <span className="font-medium text-dark">Chiuso</span>
                 </div>
               </div>
             </div>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { MonteCarlo, Inter, Nunito_Sans } from "next/font/google";
+import { MonteCarlo, Inter, Nunito_Sans, Lora } from "next/font/google";
 import "./globals.css";
 
 const montecarlo = MonteCarlo({
@@ -19,6 +19,11 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+const lora = Lora({
+  variable: "--font-lora",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "Scutti — Gli interni che desideri",
   description:
@@ -33,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="it" className={`${montecarlo.variable} ${inter.variable} ${nunitoSans.variable}`}>
+    <html lang="it" className={`${montecarlo.variable} ${inter.variable} ${nunitoSans.variable} ${lora.variable}`}>
       <body className="antialiased">
         {children}
       </body>

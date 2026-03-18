@@ -9,6 +9,7 @@
   --color-midgray: #6B6B6B;
   --color-darkbg: #1C1C1C;
   --font-sans: var(--font-inter);
+  --font-serif: var(--font-lora);
 }
 
 html {
@@ -16,11 +17,15 @@ html {
 }
 
 @utility font-script {
-  font-family: var(--font-montecarlo), cursive;
+  font-family: var(--font-lora), serif;
 }
 
 @utility font-logo {
   font-family: var(--font-nunito), sans-serif;
+}
+
+@utility font-serif {
+  font-family: var(--font-lora), serif;
 }
 
 body {

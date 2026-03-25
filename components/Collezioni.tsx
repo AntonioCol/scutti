@@ -1,10 +1,22 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { collezioni } from "@/data/collezioni";
+import { ExternalLink } from "lucide-react";
+import { collezioni, fornitori } from "@/data/collezioni";
+import type { Collezione } from "@/data/collezioni";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 export default function Collezioni() {
+  const [selected, setSelected] = useState<Collezione | null>(null);
+
   return (
     <section id="collezioni" className="py-24 md:py-32 bg-[#1C1C1C]">
       <div className="max-w-7xl mx-auto px-6">
@@ -35,6 +47,7 @@ export default function Collezioni() {
               viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.6, delay: (i % 4) * 0.1 }}
               className="group relative aspect-square overflow-hidden cursor-pointer bg-white"
+              onClick={() => setSelected(cat)}
             >
               {/* Image */}
               <Image
@@ -56,6 +69,68 @@ export default function Collezioni() {
           ))}
         </div>
       </div>
+
+      {/* Modal fornitori */}
+      <Dialog open={!!selected} onOpenChange={(open) => !open && setSelected(null)}>
+        <DialogContent className="max-w-2xl">
+          {selected && (
+            <>
+              <DialogHeader>
+                <DialogTitle>{selected.nome}</DialogTitle>
+                <DialogDescription>
+                  I nostri fornitori selezionati per {selected.nome.toLowerCase()}
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+                {selected.fornitori.map((ref) => {
+                  const f = fornitori[ref.id];
+                  if (!f) return null;
+                  const href = ref.url || f.website;
+
+                  return (
+                    <a
+                      key={f.id}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group/card flex items-center gap-4 rounded-lg border border-[#e0dbd3] bg-white p-4 transition-all duration-200 hover:border-[#EF8C00]/40 hover:shadow-md"
+                    >
+                      {/* Logo o iniziale */}
+                      <div className="relative flex-shrink-0 w-16 h-16 rounded-md bg-[#F5F2ED] flex items-center justify-center overflow-hidden">
+                        {f.logo ? (
+                          <Image
+                            src={f.logo}
+                            alt={f.nome}
+                            width={56}
+                            height={56}
+                            className="object-contain p-1 grayscale group-hover/card:grayscale-0 transition-all duration-300"
+                          />
+                        ) : (
+                          <span className="text-xl font-bold text-[#6B6B6B] group-hover/card:text-[#EF8C00] transition-colors duration-300">
+                            {f.nome.charAt(0)}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Info */}
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-[#2B2B2B] text-sm truncate">
+                          {f.nome}
+                        </p>
+                        <p className="text-xs text-[#6B6B6B] mt-0.5 flex items-center gap-1">
+                          Visita il sito
+                          <ExternalLink className="w-3 h-3 opacity-0 group-hover/card:opacity-100 transition-opacity duration-200" />
+                        </p>
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }

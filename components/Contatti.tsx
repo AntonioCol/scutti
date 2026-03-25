@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -90,20 +90,14 @@ export default function Contatti() {
           </div>
 
           {/* Orari showroom */}
-          <div className="bg-white border border-input p-6">
-            <p className="text-xs tracking-[0.2em] uppercase text-primary mb-3">Orari showroom</p>
-            <div className="space-y-1 text-sm text-midgray">
-              <div className="flex justify-between">
-                <span>Lunedì – Venerdì</span>
-                <span className="font-medium text-dark">9:00 – 13:00 / 15:00 – 19:00</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Sabato</span>
-                <span className="font-medium text-dark">9:00 – 13:00</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Domenica</span>
-                <span className="font-medium text-dark">Chiuso</span>
+          <div className="flex items-start gap-4">
+            <Clock size={18} className="text-primary mt-0.5 shrink-0" />
+            <div>
+              <p className="text-sm font-medium text-dark">Orari showroom</p>
+              <div className="text-sm text-midgray mt-1 space-y-0.5 leading-relaxed">
+                <p>Lunedì – Venerdì: <span className="font-medium text-dark">9:00 – 13:00 / 15:00 – 19:00</span></p>
+                <p>Sabato: <span className="font-medium text-dark">9:00 – 13:00</span></p>
+                <p>Domenica: <span className="font-medium text-dark">Chiuso</span></p>
               </div>
             </div>
           </div>

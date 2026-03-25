@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, TriangleAlert } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { marchi, fornitori } from "@/data/collezioni";
 import type { Fornitore } from "@/data/collezioni";
 import {
@@ -99,49 +100,38 @@ export default function Marchi() {
         </div>
       </div>
 
-      {/* Modal fornitore */}
+      {/* Modal avvertimento uscita sito */}
       <Dialog open={!!selected} onOpenChange={(open) => !open && setSelected(null)}>
-        <DialogContent className="max-w-sm">
+        <DialogContent className="max-w-sm text-center">
           {selected && (
             <>
-              <DialogHeader>
-                <DialogTitle>{selected.nome}</DialogTitle>
-                <DialogDescription>
-                  Visita il sito ufficiale del brand
+              <div className="flex justify-center mb-2">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                  <TriangleAlert size={24} className="text-primary" />
+                </div>
+              </div>
+              <DialogHeader className="text-center">
+                <DialogTitle className="text-center">Apertura sito esterno</DialogTitle>
+                <DialogDescription className="text-center">
+                  Verrà aperta una nuova scheda del browser con il sito ufficiale di <span className="font-medium text-dark">{selected.nome}</span>. Scutti non è responsabile dei contenuti esterni.
                 </DialogDescription>
               </DialogHeader>
-
-              <a
-                href={selected.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group/card flex items-center gap-4 rounded-lg border border-[#e0dbd3] bg-white p-4 transition-all duration-200 hover:border-[#EF8C00]/40 hover:shadow-md mt-2"
-              >
-                <div className="relative flex-shrink-0 w-16 h-16 rounded-md bg-[#F5F2ED] flex items-center justify-center overflow-hidden">
-                  {selected.logo ? (
-                    <Image
-                      src={selected.logo}
-                      alt={selected.nome}
-                      width={56}
-                      height={56}
-                      className="object-contain p-1 grayscale group-hover/card:grayscale-0 transition-all duration-300"
-                    />
-                  ) : (
-                    <span className="text-xl font-bold text-[#6B6B6B] group-hover/card:text-[#EF8C00] transition-colors duration-300">
-                      {selected.nome.charAt(0)}
-                    </span>
-                  )}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="font-medium text-[#2B2B2B] text-sm truncate">
-                    {selected.nome}
-                  </p>
-                  <p className="text-xs text-[#6B6B6B] mt-0.5 flex items-center gap-1">
-                    Visita il sito
-                    <ExternalLink className="w-3 h-3 opacity-0 group-hover/card:opacity-100 transition-opacity duration-200" />
-                  </p>
-                </div>
-              </a>
+              <div className="flex flex-col gap-3 mt-4">
+                <Button variant="dark" asChild>
+                  <a
+                    href={selected.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setSelected(null)}
+                  >
+                    <ExternalLink size={16} />
+                    Vai al sito di {selected.nome}
+                  </a>
+                </Button>
+                <Button variant="outline" onClick={() => setSelected(null)}>
+                  Resta su Scutti
+                </Button>
+              </div>
             </>
           )}
         </DialogContent>

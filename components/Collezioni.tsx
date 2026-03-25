@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, TriangleAlert } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { collezioni, fornitori } from "@/data/collezioni";
 import type { Collezione } from "@/data/collezioni";
 import {
@@ -16,6 +17,7 @@ import {
 
 export default function Collezioni() {
   const [selected, setSelected] = useState<Collezione | null>(null);
+  const [exitLink, setExitLink] = useState<{ nome: string; url: string } | null>(null);
 
   return (
     <section id="collezioni" className="py-24 md:py-32 bg-[#1C1C1C]">
@@ -89,12 +91,11 @@ export default function Collezioni() {
                   const href = ref.url || f.website;
 
                   return (
-                    <a
+                    <button
                       key={f.id}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group/card flex items-center gap-4 rounded-lg border border-[#e0dbd3] bg-white p-4 transition-all duration-200 hover:border-[#EF8C00]/40 hover:shadow-md"
+                      type="button"
+                      onClick={() => setExitLink({ nome: f.nome, url: href })}
+                      className="group/card flex items-center gap-4 rounded-lg border border-[#e0dbd3] bg-white p-4 transition-all duration-200 hover:border-[#EF8C00]/40 hover:shadow-md text-left cursor-pointer"
                     >
                       {/* Logo o iniziale */}
                       <div className="relative flex-shrink-0 w-16 h-16 rounded-md bg-[#F5F2ED] flex items-center justify-center overflow-hidden">
@@ -123,9 +124,46 @@ export default function Collezioni() {
                           <ExternalLink className="w-3 h-3 opacity-0 group-hover/card:opacity-100 transition-opacity duration-200" />
                         </p>
                       </div>
-                    </a>
+                    </button>
                   );
                 })}
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Modal avvertimento uscita sito */}
+      <Dialog open={!!exitLink} onOpenChange={(open) => !open && setExitLink(null)}>
+        <DialogContent className="max-w-sm text-center">
+          {exitLink && (
+            <>
+              <div className="flex justify-center mb-2">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                  <TriangleAlert size={24} className="text-primary" />
+                </div>
+              </div>
+              <DialogHeader className="text-center">
+                <DialogTitle className="text-center">Apertura sito esterno</DialogTitle>
+                <DialogDescription className="text-center">
+                  Verrà aperta una nuova scheda del browser con il sito ufficiale di <span className="font-medium text-dark">{exitLink.nome}</span>. Scutti non è responsabile dei contenuti esterni.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex flex-col gap-3 mt-4">
+                <Button variant="dark" asChild>
+                  <a
+                    href={exitLink.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setExitLink(null)}
+                  >
+                    <ExternalLink size={16} />
+                    Vai al sito di {exitLink.nome}
+                  </a>
+                </Button>
+                <Button variant="outline" onClick={() => setExitLink(null)}>
+                  Resta su Scutti
+                </Button>
               </div>
             </>
           )}

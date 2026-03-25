@@ -15,21 +15,23 @@ function validate(form: { nome: string; email: string; telefono: string; messagg
   const errors: Errors = {};
 
   const nome = form.nome.trim();
-  // Solo lettere (incluse accentate italiane), spazi, apostrofi e trattini
-  const nomeRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ' -]+$/;
-  // Almeno nome e cognome (due parole)
+  // \p{L} accetta qualsiasi lettera Unicode (latino, cirillico, arabo, ecc.)
+  const nomeRegex = /^[\p{L}' -]+$/u;
   const parole = nome.split(/\s+/).filter(Boolean);
+  // Parole generiche / senza senso da bloccare
+  const paroleBlocco = ["test", "prova", "asd", "asdf", "abc", "xxx", "zzz", "aaa", "bbb", "ccc", "nome", "cognome", "pippo", "pluto", "foo", "bar", "baz", "qwerty", "admin", "user", "guest", "ciao", "hello"];
+  // Controlla lettere ripetute 3+ volte consecutive (es. "aaaa", "bbbbb")
+  const haRipetizioni = /(.)\1{2,}/.test(nome.toLowerCase());
+  const haParolaBlocco = parole.some((p) => paroleBlocco.includes(p.toLowerCase()));
 
   if (!nome) {
     errors.nome = "Il nome è obbligatorio";
   } else if (!nomeRegex.test(nome)) {
-    errors.nome = "Il nome può contenere solo lettere, spazi e apostrofi";
-  } else if (nome.length < 3) {
-    errors.nome = "Il nome deve avere almeno 3 caratteri";
-  } else if (parole.length < 2) {
-    errors.nome = "Inserisci nome e cognome";
-  } else if (parole.some((p) => p.length < 2)) {
-    errors.nome = "Ogni parte del nome deve avere almeno 2 caratteri";
+    errors.nome = "Inserisci nome e cognome validi";
+  } else if (nome.length < 3 || parole.length < 2 || parole.some((p) => p.length < 2)) {
+    errors.nome = "Inserisci nome e cognome validi";
+  } else if (haParolaBlocco || haRipetizioni) {
+    errors.nome = "Inserisci nome e cognome validi";
   }
 
   const email = form.email.trim().toLowerCase();

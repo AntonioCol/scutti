@@ -37,27 +37,28 @@ export default function Contatti() {
           <div className="w-12 h-[1px] bg-primary mx-auto mt-6" />
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
-          {/* Left: info + form */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8 }}
-          >
-            {/* Contact info */}
-            <div className="space-y-5 mb-10">
-              <div className="flex items-start gap-4">
-                <MapPin size={18} className="text-primary mt-0.5 shrink-0" />
-                <div>
-                  <p className="text-sm font-medium text-dark">Indirizzo</p>
-                  <p className="text-sm text-midgray mt-1 leading-relaxed">
-                    Scutti Gilberto S.r.l.<br />
-                    C.da Poggio, 25<br />
-                    66047 Villa Santa Maria (CH) — Abruzzo
-                  </p>
-                </div>
+        {/* Info + Orari row */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.8 }}
+          className="grid md:grid-cols-2 gap-8 lg:gap-20 mb-12"
+        >
+          {/* Indirizzo + Telefono + Email */}
+          <div className="grid grid-cols-2 gap-6">
+            <div className="flex items-start gap-4">
+              <MapPin size={18} className="text-primary mt-0.5 shrink-0" />
+              <div>
+                <p className="text-sm font-medium text-dark">Indirizzo</p>
+                <p className="text-sm text-midgray mt-1 leading-relaxed">
+                  Scutti Gilberto S.r.l.<br />
+                  C.da Poggio, 25<br />
+                  66047 Villa Santa Maria (CH) — Abruzzo
+                </p>
               </div>
+            </div>
+            <div className="space-y-5">
               <div className="flex items-start gap-4">
                 <Phone size={18} className="text-primary mt-0.5 shrink-0" />
                 <div>
@@ -66,7 +67,7 @@ export default function Contatti() {
                     <a href="tel:0872944160" className="hover:text-primary transition-colors">
                       0872.944160
                     </a>
-                    {" "}·{" "}
+                    <br />
                     <a href="tel:3345062792" className="hover:text-primary transition-colors">
                       334.5062792
                     </a>
@@ -86,8 +87,37 @@ export default function Contatti() {
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Form card */}
+          {/* Orari showroom */}
+          <div className="bg-white border border-input p-6">
+            <p className="text-xs tracking-[0.2em] uppercase text-primary mb-3">Orari showroom</p>
+            <div className="space-y-1 text-sm text-midgray">
+              <div className="flex justify-between">
+                <span>Lunedì – Venerdì</span>
+                <span className="font-medium text-dark">9:00 – 13:00 / 15:00 – 19:00</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Sabato</span>
+                <span className="font-medium text-dark">9:00 – 13:00</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Domenica</span>
+                <span className="font-medium text-dark">Chiuso</span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Form + Map row */}
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
+          {/* Form card */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8 }}
+          >
             <div className="bg-white border border-[#e0dbd3] shadow-lg shadow-black/5 p-8 md:p-10">
               <p className="text-xs tracking-[0.2em] uppercase text-primary font-medium mb-1">
                 Richiedi informazioni
@@ -180,15 +210,14 @@ export default function Contatti() {
             </div>
           </motion.div>
 
-          {/* Right: map */}
+          {/* Map */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex flex-col gap-6"
           >
-            <div className="flex-1 min-h-[400px] overflow-hidden">
+            <div className="min-h-[400px] h-full overflow-hidden">
               <iframe
                 src="https://maps.google.com/maps?q=Scutti+Gilberto+Srl+Contrada+Poggio+25+66047+Villa+Santa+Maria+CH&t=&z=16&ie=UTF8&iwloc=&output=embed"
                 width="100%"
@@ -199,23 +228,6 @@ export default function Contatti() {
                 referrerPolicy="no-referrer-when-downgrade"
                 title="Mappa Scutti"
               />
-            </div>
-            <div className="bg-white border border-input p-6">
-              <p className="text-xs tracking-[0.2em] uppercase text-primary mb-3">Orari showroom</p>
-              <div className="space-y-1 text-sm text-midgray">
-                <div className="flex justify-between">
-                  <span>Lunedì – Venerdì</span>
-                  <span className="font-medium text-dark">9:00 – 13:00 / 15:00 – 19:00</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Sabato</span>
-                  <span className="font-medium text-dark">9:00 – 13:00</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Domenica</span>
-                  <span className="font-medium text-dark">Chiuso</span>
-                </div>
-              </div>
             </div>
           </motion.div>
         </div>

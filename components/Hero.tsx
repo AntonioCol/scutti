@@ -45,14 +45,19 @@ export default function Hero() {
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/65 z-10" />
 
-      {/* Dots */}
-      <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-20 flex gap-1.5">
+      {/* Dots – verticali a sinistra su desktop, orizzontali in basso su mobile */}
+      <div className="absolute z-20
+        bottom-20 left-1/2 -translate-x-1/2 flex flex-row gap-1.5
+        md:left-6 md:top-1/2 md:bottom-auto md:-translate-y-1/2 md:translate-x-0 md:flex-col"
+      >
         {heroImages.map((_, i) => (
           <button
             key={i}
             onClick={() => setCurrent(i)}
-            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-              i === current ? "bg-primary w-4" : "bg-white/40"
+            className={`rounded-full transition-all duration-300 ${
+              i === current
+                ? "bg-primary w-1.5 h-4 md:w-1.5 md:h-4"
+                : "bg-white/40 w-1.5 h-1.5"
             }`}
             aria-label={`Slide ${i + 1}`}
           />

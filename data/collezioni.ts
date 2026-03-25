@@ -299,7 +299,11 @@ export const showroomImages = [
   { src: "/img/showroom/scutti_showroom_6.jpg", alt: "Showroom Scutti", span: "" },
 ];
 
-export const heroImages = Array.from(
-  { length: 25 },
-  (_, i) => `/img/wrapper/${i + 1}.jpg`
-);
+export const heroImages = [
+  "/img/wrapper/8.jpg",
+  "/img/wrapper/3.jpg",
+  "/img/wrapper/15.jpg",
+  "/img/wrapper/6.jpg",
+  "/img/wrapper/7.jpg",
+  "/img/wrapper/21.jpg",
+];

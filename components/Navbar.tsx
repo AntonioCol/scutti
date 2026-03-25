@@ -1,15 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-  SheetTitle,
-} from "@/components/ui/sheet";
 
 const links = [
   { label: "Home", href: "#home" },
@@ -25,19 +20,33 @@ export default function Navbar() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Blocca lo scroll del body quando il menu è aperto
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  const close = useCallback(() => setOpen(false), []);
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-sand shadow-sm" : "bg-transparent"
+        scrolled || open ? "bg-sand shadow-sm" : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
         {/* Logo */}
-        <a href="#home" className="flex items-center gap-2" onClick={() => setOpen(false)}>
+        <a href="#home" className="flex items-center gap-2" onClick={close}>
           <Image
             src="/img/logo.png"
             alt="Scutti"
@@ -47,7 +56,7 @@ export default function Navbar() {
           />
           <span
             className={`font-logo text-[24px] font-black tracking-[-0.05em] leading-none transition-colors duration-300 ${
-              scrolled ? "text-dark" : "text-white"
+              scrolled || open ? "text-dark" : "text-white"
             }`}
           >
             Scutti
@@ -72,44 +81,62 @@ export default function Navbar() {
           </Button>
         </nav>
 
-        {/* Mobile menu */}
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger asChild>
-            <button
-              className={`md:hidden p-2 -mr-2 transition-colors duration-300 ${
-                scrolled || open ? "text-dark" : "text-white"
-              }`}
-              aria-label="Menu"
-            >
-              {open ? <X size={22} /> : <Menu size={22} />}
-            </button>
-          </SheetTrigger>
-          <SheetContent
-            side="top"
-            showCloseButton={false}
-            className="bg-sand pt-20 px-6 pb-8"
-          >
-            <SheetTitle className="sr-only">Menu di navigazione</SheetTitle>
-            <nav className="flex flex-col gap-6">
-              {links.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="text-base tracking-[0.15em] uppercase font-medium text-dark hover:text-primary transition-colors border-b border-input pb-4"
-                >
-                  {link.label}
-                </a>
-              ))}
-              <Button variant="outline" className="mt-2 py-4 text-center" asChild>
-                <a href="#contatti" onClick={() => setOpen(false)}>
-                  Richiedi Appuntamento
-                </a>
-              </Button>
-            </nav>
-          </SheetContent>
-        </Sheet>
+        {/* Mobile hamburger */}
+        <button
+          type="button"
+          className={`md:hidden p-2 -mr-2 transition-colors duration-300 relative z-50 touch-manipulation ${
+            scrolled || open ? "text-dark" : "text-white"
+          }`}
+          onClick={() => setOpen((v) => !v)}
+          aria-label={open ? "Chiudi menu" : "Apri menu"}
+        >
+          {open ? <X size={22} /> : <Menu size={22} />}
+        </button>
       </div>
+
+      {/* Mobile menu – no portals, no Radix */}
+      <AnimatePresence>
+        {open && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-40 bg-black/40 md:hidden"
+              onClick={close}
+            />
+
+            {/* Panel */}
+            <motion.nav
+              initial={{ y: "-100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "-100%" }}
+              transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
+              className="fixed inset-x-0 top-0 z-40 bg-sand pt-20 px-6 pb-8 shadow-lg md:hidden"
+            >
+              <div className="flex flex-col gap-6">
+                {links.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={close}
+                    className="text-base tracking-[0.15em] uppercase font-medium text-dark hover:text-primary active:text-primary transition-colors border-b border-input pb-4 touch-manipulation"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+                <Button variant="outline" className="mt-2 py-4 text-center" asChild>
+                  <a href="#contatti" onClick={close}>
+                    Richiedi Appuntamento
+                  </a>
+                </Button>
+              </div>
+            </motion.nav>
+          </>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

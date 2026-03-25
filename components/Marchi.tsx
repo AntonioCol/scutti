@@ -54,7 +54,7 @@ export default function Marchi() {
 
       {/* Logo grid */}
       <div className="max-w-7xl mx-auto px-6 mt-16">
-        <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-px bg-[#e0dbd3]">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-8 gap-px bg-[#e0dbd3]">
           {marchi.map((brand, i) => (
             <motion.div
               key={brand.nome}

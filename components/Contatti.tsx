@@ -87,74 +87,97 @@ export default function Contatti() {
               </div>
             </div>
 
-            {/* WhatsApp */}
-            <Button variant="whatsapp" size="sm" asChild className="mb-10">
-              <a
-                href="https://wa.me/393345062792"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <MessageCircle size={16} />
-                Scrivici su WhatsApp
-              </a>
-            </Button>
+            {/* Form card */}
+            <div className="bg-white border border-[#e0dbd3] shadow-lg shadow-black/5 p-8 md:p-10">
+              <p className="text-xs tracking-[0.2em] uppercase text-primary font-medium mb-1">
+                Richiedi informazioni
+              </p>
+              <h3 className="font-script text-2xl text-dark mb-6">
+                Scrivici un messaggio
+              </h3>
 
-            {/* Form */}
-            {sent ? (
-              <div className="border border-primary p-8 text-center">
-                <p className="font-script text-2xl text-dark mb-2">Grazie!</p>
-                <p className="text-sm text-midgray">
-                  Il tuo messaggio è stato inviato. Ti risponderemo al più presto.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+              {sent ? (
+                <div className="py-12 text-center">
+                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <Mail size={24} className="text-primary" />
+                  </div>
+                  <p className="font-script text-2xl text-dark mb-2">Grazie!</p>
+                  <p className="text-sm text-midgray">
+                    Il tuo messaggio è stato inviato. Ti risponderemo al più presto.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="nome">Nome *</Label>
+                      <Input
+                        id="nome"
+                        type="text"
+                        placeholder="Il tuo nome"
+                        required
+                        value={form.nome}
+                        onChange={(e) => setForm({ ...form, nome: e.target.value })}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="telefono">Telefono</Label>
+                      <Input
+                        id="telefono"
+                        type="tel"
+                        placeholder="333 1234567"
+                        value={form.telefono}
+                        onChange={(e) => setForm({ ...form, telefono: e.target.value })}
+                      />
+                    </div>
+                  </div>
                   <div>
-                    <Label htmlFor="nome">Nome *</Label>
+                    <Label htmlFor="email">Email *</Label>
                     <Input
-                      id="nome"
-                      type="text"
+                      id="email"
+                      type="email"
+                      placeholder="nome@email.it"
                       required
-                      value={form.nome}
-                      onChange={(e) => setForm({ ...form, nome: e.target.value })}
+                      value={form.email}
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
                     />
                   </div>
                   <div>
-                    <Label htmlFor="telefono">Telefono</Label>
-                    <Input
-                      id="telefono"
-                      type="tel"
-                      value={form.telefono}
-                      onChange={(e) => setForm({ ...form, telefono: e.target.value })}
+                    <Label htmlFor="messaggio">Messaggio *</Label>
+                    <Textarea
+                      id="messaggio"
+                      placeholder="Raccontaci cosa stai cercando..."
+                      required
+                      rows={5}
+                      value={form.messaggio}
+                      onChange={(e) => setForm({ ...form, messaggio: e.target.value })}
                     />
                   </div>
-                </div>
-                <div>
-                  <Label htmlFor="email">Email *</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    required
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="messaggio">Messaggio *</Label>
-                  <Textarea
-                    id="messaggio"
-                    required
-                    rows={4}
-                    value={form.messaggio}
-                    onChange={(e) => setForm({ ...form, messaggio: e.target.value })}
-                  />
-                </div>
-                <Button variant="dark" type="submit" className="w-full">
-                  Invia Messaggio
-                </Button>
-              </form>
-            )}
+                  <Button variant="dark" type="submit" className="w-full">
+                    Invia Messaggio
+                  </Button>
+
+                  {/* Divider */}
+                  <div className="flex items-center gap-4 pt-1">
+                    <div className="flex-1 h-px bg-[#e0dbd3]" />
+                    <span className="text-xs text-midgray uppercase tracking-wider">oppure</span>
+                    <div className="flex-1 h-px bg-[#e0dbd3]" />
+                  </div>
+
+                  {/* WhatsApp */}
+                  <Button variant="whatsapp" asChild className="w-full py-4">
+                    <a
+                      href="https://wa.me/393345062792"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <MessageCircle size={18} />
+                      Scrivici su WhatsApp
+                    </a>
+                  </Button>
+                </form>
+              )}
+            </div>
           </motion.div>
 
           {/* Right: map */}
@@ -167,7 +190,7 @@ export default function Contatti() {
           >
             <div className="flex-1 min-h-[400px] overflow-hidden">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2956.1!2d14.3539!3d41.9452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1331d9a59f8ef%3A0x4053da8f0!2sVilla%20Santa%20Maria%2C%20CH%2C%20Italia!5e0!3m2!1sit!2sit!4v1"
+                src="https://maps.google.com/maps?q=Scutti+Gilberto+Srl+Contrada+Poggio+25+66047+Villa+Santa+Maria+CH&t=&z=16&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0, minHeight: "400px" }}

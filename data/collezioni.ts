@@ -134,7 +134,7 @@ export const collezioni: Collezione[] = [
   {
     id: "sanitari",
     nome: "Sanitari",
-    immagine: "/img/wrapper/24.jpg",
+    immagine: "/img/collezioni/bg/sanitari.jpg",
     fornitori: [
       { id: "dolomite" },
       { id: "idealstandard" },

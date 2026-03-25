@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ExternalLink, TriangleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { trackFornitoreClick } from "@/lib/analytics";
 import { marchi, fornitori } from "@/data/collezioni";
 import type { Fornitore } from "@/data/collezioni";
 import {
@@ -122,7 +123,7 @@ export default function Marchi() {
                     href={selected.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => setSelected(null)}
+                    onClick={() => { trackFornitoreClick(selected.nome, "marchi"); setSelected(null); }}
                   >
                     <ExternalLink size={16} />
                     Vai al sito di {selected.nome}

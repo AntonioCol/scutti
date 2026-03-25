@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+import { trackFormSubmit, trackWhatsAppClick } from "@/lib/analytics";
 
 type Errors = Partial<Record<"nome" | "email" | "telefono" | "messaggio", string>>;
 
@@ -105,6 +106,7 @@ export default function Contatti() {
     setErrors(allErrors);
     setTouched({ nome: true, email: true, telefono: true, messaggio: true });
     if (Object.keys(allErrors).length > 0) return;
+    trackFormSubmit();
     setSent(true);
   };
 
@@ -335,6 +337,7 @@ export default function Contatti() {
                       href="https://wa.me/393345062792"
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackWhatsAppClick()}
                     >
                       <MessageCircle size={18} />
                       Scrivici su WhatsApp

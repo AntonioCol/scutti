@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ExternalLink, TriangleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { trackFornitoreClick } from "@/lib/analytics";
 import { collezioni, fornitori } from "@/data/collezioni";
 import type { Collezione } from "@/data/collezioni";
 import {
@@ -155,7 +156,7 @@ export default function Collezioni() {
                     href={exitLink.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => setExitLink(null)}
+                    onClick={() => { trackFornitoreClick(exitLink.nome, "collezioni"); setExitLink(null); }}
                   >
                     <ExternalLink size={16} />
                     Vai al sito di {exitLink.nome}

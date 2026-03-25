@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
 
 const links = [
   { label: "Home", href: "#home" },
@@ -78,7 +81,17 @@ export default function Footer() {
         {/* Bottom */}
         <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-white/30">
           <p>© {new Date().getFullYear()} Scutti Gilberto S.r.l. — Tutti i diritti riservati</p>
-          <p>Privacy Policy · Cookie Policy</p>
+          <p className="flex gap-2">
+            <Link href="/privacy" className="hover:text-white/60 transition-colors">Privacy Policy</Link>
+            <span>·</span>
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new Event("open-cookie-settings"))}
+              className="hover:text-white/60 transition-colors cursor-pointer"
+            >
+              Cookie Policy
+            </button>
+          </p>
         </div>
       </div>
     </footer>

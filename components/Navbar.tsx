@@ -11,6 +11,7 @@ const links = [
   { label: "Collezioni", href: "#collezioni" },
   { label: "Marchi", href: "#marchi" },
   { label: "Showroom", href: "#showroom" },
+  { label: "Blog", href: "/blog" },
   { label: "Contatti", href: "#contatti" },
 ];
 

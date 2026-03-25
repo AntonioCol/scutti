@@ -2,18 +2,107 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, MessageCircle, Clock } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle, Clock, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+
+type Errors = Partial<Record<"nome" | "email" | "telefono" | "messaggio", string>>;
+
+function validate(form: { nome: string; email: string; telefono: string; messaggio: string }): Errors {
+  const errors: Errors = {};
+
+  const nome = form.nome.trim();
+  // Solo lettere (incluse accentate italiane), spazi, apostrofi e trattini
+  const nomeRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ' -]+$/;
+  // Almeno nome e cognome (due parole)
+  const parole = nome.split(/\s+/).filter(Boolean);
+
+  if (!nome) {
+    errors.nome = "Il nome è obbligatorio";
+  } else if (!nomeRegex.test(nome)) {
+    errors.nome = "Il nome può contenere solo lettere, spazi e apostrofi";
+  } else if (nome.length < 3) {
+    errors.nome = "Il nome deve avere almeno 3 caratteri";
+  } else if (parole.length < 2) {
+    errors.nome = "Inserisci nome e cognome";
+  } else if (parole.some((p) => p.length < 2)) {
+    errors.nome = "Ogni parte del nome deve avere almeno 2 caratteri";
+  }
+
+  const email = form.email.trim().toLowerCase();
+  // Domini email temporanei/usa e getta più comuni
+  const disposableDomains = ["mailinator.com", "guerrillamail.com", "tempmail.com", "throwaway.email", "yopmail.com", "10minutemail.com", "trashmail.com", "fakeinbox.com", "sharklasers.com", "guerrillamailblock.com", "grr.la", "dispostable.com", "maildrop.cc"];
+  // Estensioni dominio reali (non esaustivo ma copre i casi comuni)
+  const validTlds = /\.(it|com|net|org|eu|info|biz|co|me|io|dev|edu|gov|name|pro|tel|mobi|asia|cat|jobs|travel|aero|coop|museum|int|mil|fr|de|es|uk|ch|at|be|nl|pt|pl|ro|bg|hr|cz|dk|fi|gr|hu|ie|lt|lv|lu|mt|se|si|sk|no|ru|us|ca|br|ar|mx|au|nz|jp|cn|in|kr|za)$/;
+
+  if (!email) {
+    errors.email = "L'email è obbligatoria";
+  } else if (!/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(email)) {
+    errors.email = "Inserisci un indirizzo email valido";
+  } else if (/\.{2,}/.test(email) || email.startsWith(".") || email.includes(".@")) {
+    errors.email = "L'indirizzo email contiene caratteri non validi";
+  } else {
+    const domain = email.split("@")[1];
+    if (disposableDomains.includes(domain)) {
+      errors.email = "Non sono ammesse email temporanee o usa e getta";
+    } else if (!validTlds.test(domain)) {
+      errors.email = "Il dominio dell'email non sembra valido";
+    }
+  }
+
+  // Telefono italiano: mobile (3xx) o fisso (0x/0xx) con o senza prefisso +39
+  const telefono = form.telefono.trim().replace(/[\s\-().]/g, "");
+  if (form.telefono.trim()) {
+    // Rimuovi +39 o 0039 iniziale se presente
+    const numPulito = telefono.replace(/^(\+39|0039)/, "");
+    // Mobile: 3xx xxxxxxx (9-10 cifre) — Fisso: 0x/0xx xxxxxxx (6-11 cifre)
+    const isMobile = /^3\d{8,9}$/.test(numPulito);
+    const isFisso = /^0\d{5,10}$/.test(numPulito);
+    if (!isMobile && !isFisso) {
+      errors.telefono = "Inserisci un numero italiano valido (fisso o cellulare)";
+    }
+  }
+
+  const messaggio = form.messaggio.trim();
+  if (!messaggio) {
+    errors.messaggio = "Il messaggio è obbligatorio";
+  } else if (messaggio.length < 10) {
+    errors.messaggio = "Il messaggio deve avere almeno 10 caratteri";
+  }
+
+  return errors;
+}
 
 export default function Contatti() {
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({ nome: "", email: "", telefono: "", messaggio: "" });
+  const [errors, setErrors] = useState<Errors>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  const handleBlur = (field: keyof typeof form) => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+    const fieldErrors = validate(form);
+    setErrors((prev) => ({ ...prev, [field]: fieldErrors[field] }));
+  };
+
+  const handleChange = (field: keyof typeof form, value: string) => {
+    const next = { ...form, [field]: value };
+    setForm(next);
+    if (touched[field]) {
+      const fieldErrors = validate(next);
+      setErrors((prev) => ({ ...prev, [field]: fieldErrors[field] }));
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const allErrors = validate(form);
+    setErrors(allErrors);
+    setTouched({ nome: true, email: true, telefono: true, messaggio: true });
+    if (Object.keys(allErrors).length > 0) return;
     setSent(true);
   };
 
@@ -131,51 +220,101 @@ export default function Contatti() {
                   </p>
                 </div>
               ) : (
+                <TooltipProvider>
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="nome">Nome *</Label>
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <Label htmlFor="nome" className="mb-0">Nome *</Label>
+                        <Tooltip>
+                          <TooltipTrigger type="button" tabIndex={-1}>
+                            <Info size={13} className="text-muted-foreground" />
+                          </TooltipTrigger>
+                          <TooltipContent>Inserisci il tuo nome e cognome</TooltipContent>
+                        </Tooltip>
+                      </div>
                       <Input
                         id="nome"
                         type="text"
                         placeholder="Il tuo nome"
-                        required
                         value={form.nome}
-                        onChange={(e) => setForm({ ...form, nome: e.target.value })}
+                        onChange={(e) => handleChange("nome", e.target.value)}
+                        onBlur={() => handleBlur("nome")}
+                        aria-invalid={!!errors.nome}
                       />
+                      {touched.nome && errors.nome && (
+                        <p className="text-xs text-destructive mt-1">{errors.nome}</p>
+                      )}
                     </div>
                     <div>
-                      <Label htmlFor="telefono">Telefono</Label>
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <Label htmlFor="telefono" className="mb-0">Telefono</Label>
+                        <Tooltip>
+                          <TooltipTrigger type="button" tabIndex={-1}>
+                            <Info size={13} className="text-muted-foreground" />
+                          </TooltipTrigger>
+                          <TooltipContent>Facoltativo — per essere ricontattato più rapidamente</TooltipContent>
+                        </Tooltip>
+                      </div>
                       <Input
                         id="telefono"
                         type="tel"
                         placeholder="333 1234567"
                         value={form.telefono}
-                        onChange={(e) => setForm({ ...form, telefono: e.target.value })}
+                        onChange={(e) => handleChange("telefono", e.target.value)}
+                        onBlur={() => handleBlur("telefono")}
+                        aria-invalid={!!errors.telefono}
                       />
+                      {touched.telefono && errors.telefono && (
+                        <p className="text-xs text-destructive mt-1">{errors.telefono}</p>
+                      )}
                     </div>
                   </div>
                   <div>
-                    <Label htmlFor="email">Email *</Label>
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <Label htmlFor="email" className="mb-0">Email *</Label>
+                      <Tooltip>
+                        <TooltipTrigger type="button" tabIndex={-1}>
+                          <Info size={13} className="text-muted-foreground" />
+                        </TooltipTrigger>
+                        <TooltipContent>Ti risponderemo a questo indirizzo email</TooltipContent>
+                      </Tooltip>
+                    </div>
                     <Input
                       id="email"
                       type="email"
                       placeholder="nome@email.it"
-                      required
                       value={form.email}
-                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      onChange={(e) => handleChange("email", e.target.value)}
+                      onBlur={() => handleBlur("email")}
+                      aria-invalid={!!errors.email}
                     />
+                    {touched.email && errors.email && (
+                      <p className="text-xs text-destructive mt-1">{errors.email}</p>
+                    )}
                   </div>
                   <div>
-                    <Label htmlFor="messaggio">Messaggio *</Label>
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <Label htmlFor="messaggio" className="mb-0">Messaggio *</Label>
+                      <Tooltip>
+                        <TooltipTrigger type="button" tabIndex={-1}>
+                          <Info size={13} className="text-muted-foreground" />
+                        </TooltipTrigger>
+                        <TooltipContent>Descrivi cosa stai cercando o richiedi un preventivo</TooltipContent>
+                      </Tooltip>
+                    </div>
                     <Textarea
                       id="messaggio"
                       placeholder="Raccontaci cosa stai cercando..."
-                      required
                       rows={5}
                       value={form.messaggio}
-                      onChange={(e) => setForm({ ...form, messaggio: e.target.value })}
+                      onChange={(e) => handleChange("messaggio", e.target.value)}
+                      onBlur={() => handleBlur("messaggio")}
+                      aria-invalid={!!errors.messaggio}
                     />
+                    {touched.messaggio && errors.messaggio && (
+                      <p className="text-xs text-destructive mt-1">{errors.messaggio}</p>
+                    )}
                   </div>
                   <Button variant="dark" type="submit" className="w-full">
                     Invia Messaggio
@@ -200,6 +339,7 @@ export default function Contatti() {
                     </a>
                   </Button>
                 </form>
+                </TooltipProvider>
               )}
             </div>
           </motion.div>

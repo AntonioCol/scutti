@@ -18,15 +18,18 @@ export default function Showroom() {
           className="text-center mb-16"
         >
           <p className="text-xs tracking-[0.3em] uppercase text-primary font-medium mb-4">
-            Un&apos;esperienza sensoriale
+            Vieni a vedere, toccare, scegliere
           </p>
           <h2 className="font-script text-5xl md:text-6xl font-normal text-white">
             Lo <span className="font-script">Showroom</span>
           </h2>
           <div className="w-12 h-[1px] bg-primary mx-auto mt-6" />
-          <p className="text-white/60 mt-6 max-w-xl mx-auto text-sm leading-relaxed">
-            Oltre 1.200 m² a Villa Santa Maria (CH) dove potrete toccare
-            con mano materiali, texture e finiture dei migliori brand internazionali.
+          <p className="text-white/60 mt-6 max-w-2xl mx-auto text-sm leading-relaxed">
+            <strong className="text-white/80">1.200 m² di esposizione</strong> a Villa Santa Maria (Chieti) — il pi&ugrave; grande
+            showroom di arredo bagno e pavimenti della provincia. Qui non scegli da una foto:
+            tocchi i materiali, confronti le finiture e un consulente ti aiuta a trovare
+            la soluzione giusta per il tuo budget.
+            <span className="text-primary font-medium"> Prenota una visita gratuita.</span>
           </p>
         </motion.div>
 
@@ -83,7 +86,7 @@ export default function Showroom() {
           className="text-center mt-12"
         >
           <Button variant="outline" size="lg" asChild>
-            <a href="#contatti">Prenota una visita</a>
+            <a href="#contatti">Prenota una Visita Gratuita</a>
           </Button>
         </motion.div>
       </div>

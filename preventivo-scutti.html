@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preventivo — Scutti Gilberto S.r.l.</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; color: #2B2B2B; font-size: 11px; line-height: 1.6; background: #fff; }
+    @page { size: A4; margin: 20mm; }
+    .page { max-width: 210mm; margin: 0 auto; padding: 40px 50px; }
+    @media print { .page { padding: 0; } }
+
+    /* Header */
+    .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #EF8C00; padding-bottom: 18px; margin-bottom: 24px; }
+    .header h1 { font-family: 'Lora', serif; font-size: 22px; font-weight: 600; }
+    .header .sub { color: #EF8C00; font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-top: 3px; }
+    .header-right { text-align: right; font-size: 10px; color: #6B6B6B; line-height: 1.8; }
+
+    /* Info grid */
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    .info-box { background: #F5F2ED; padding: 14px 18px; }
+    .info-box .label { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; color: #EF8C00; font-weight: 600; margin-bottom: 5px; }
+    .info-box p { font-size: 11px; margin-bottom: 2px; }
+
+    /* Table */
+    table { width: 100%; border-collapse: collapse; font-size: 11px; }
+    thead th { background: #2B2B2B; color: #fff; padding: 8px 12px; text-align: left; font-size: 9px; text-transform: uppercase; letter-spacing: 1px; font-weight: 500; }
+    tbody td { padding: 9px 12px; border-bottom: 1px solid #e0dbd3; }
+    tbody tr:nth-child(even) { background: #faf9f7; }
+    .text-right { text-align: right; }
+    .font-medium { font-weight: 500; }
+
+    /* Totale */
+    .totale { display: flex; justify-content: space-between; align-items: center; background: #2B2B2B; color: #fff; padding: 14px 20px; margin-top: 2px; }
+    .totale .label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    .totale .value { font-size: 22px; font-weight: 700; font-family: 'Lora', serif; }
+
+    /* Extras */
+    .extras { margin-top: 16px; }
+    .extras td { padding: 7px 12px; border-bottom: 1px solid #e0dbd3; }
+
+    /* Condizioni */
+    h3 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #EF8C00; margin: 24px 0 10px 0; }
+    .cond-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .cond-box { border: 1px solid #e0dbd3; padding: 12px 14px; }
+    .cond-box .title { font-weight: 600; font-size: 11px; margin-bottom: 3px; }
+    .cond-box p { font-size: 10px; color: #6B6B6B; margin: 0; line-height: 1.5; }
+
+    /* Note */
+    .note { background: #FFF8F0; border-left: 3px solid #EF8C00; padding: 12px 16px; margin-top: 16px; font-size: 10px; color: #4a4a4a; line-height: 1.6; }
+
+    /* Firme */
+    .firme { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 30px; }
+    .firma-label { font-size: 10px; color: #6B6B6B; margin-bottom: 40px; }
+    .firma-line { border-top: 1px solid #2B2B2B; padding-top: 5px; }
+    .firma-line p { font-size: 10px; }
+    .firma-line .gray { color: #6B6B6B; }
+
+    .footer { margin-top: 20px; padding-top: 10px; border-top: 1px solid #e0dbd3; font-size: 9px; color: #999; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div>
+        <h1>Bozza di Proposta</h1>
+        <div class="sub">Rifacimento Sito Web — www.scutti.it</div>
+      </div>
+      <div class="header-right">
+        <p><strong>Data:</strong> 26 marzo 2026</p>
+        <p><strong>Stato:</strong> Bozza</p>
+        <p><strong>Rif.:</strong> PREV-2026-001</p>
+      </div>
+    </div>
+
+    <!-- INTRO INFORMALE -->
+    <p style="font-size: 12px; color: #4a4a4a; line-height: 1.8; margin-bottom: 20px;">
+      Ecco un riepilogo di quello che abbiamo fatto e di quello che include il nuovo sito.
+      Il sito attuale &egrave; datato e presenta diversi limiti — il rifacimento completo
+      lo porta a un livello professionale, moderno, veloce e ottimizzato per farvi trovare
+      su Google. Questa &egrave; una <strong>bozza da cui partire</strong>: possiamo discutere
+      ogni voce e adattarla alle vostre esigenze.
+    </p>
+
+    <!-- INFO -->
+    <div class="info-grid">
+      <div class="info-box">
+        <div class="label">Cliente</div>
+        <p><strong>Scutti Gilberto S.r.l.</strong></p>
+        <p>C.da Poggio, 25 — 66047 Villa Santa Maria (CH)</p>
+        <p>info@scutti.it — Tel. 0872.944160</p>
+      </div>
+      <div class="info-box">
+        <div class="label">Oggetto</div>
+        <p><strong>Rifacimento completo sito web</strong></p>
+        <p>Dominio: www.scutti.it (gi&agrave; esistente)</p>
+        <p>Sostituisce il sito attualmente in manutenzione</p>
+      </div>
+    </div>
+
+    <!-- TABELLA VOCI -->
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 45%">Voce</th>
+          <th style="width: 35%">Dettaglio</th>
+          <th class="text-right" style="width: 20%">Importo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Design e sviluppo sito web</strong></td>
+          <td>Homepage, 7 sezioni, design responsive, animazioni, carousel hero, griglia collezioni (12 categorie), marquee e griglia marchi (25 brand), showroom, recensioni clienti, CTA finale</td>
+          <td class="text-right font-medium">&euro; 800,00</td>
+        </tr>
+        <tr>
+          <td><strong>Form contatti avanzato</strong></td>
+          <td>Validazione in tempo reale (nome, email, telefono italiano), tooltip in italiano, integrazione WhatsApp, protezione anti-bot (honeypot), rate limiting</td>
+          <td class="text-right font-medium">&euro; 150,00</td>
+        </tr>
+        <tr>
+          <td><strong>Conformit&agrave; GDPR e Privacy</strong></td>
+          <td>Cookie banner con gestione preferenze, pagina Privacy Policy completa in italiano, blocco cookie analitici fino a consenso esplicito</td>
+          <td class="text-right font-medium">&euro; 150,00</td>
+        </tr>
+        <tr>
+          <td><strong>Google Analytics 4</strong></td>
+          <td>Integrazione consent-gated, anonimizzazione IP, eventi personalizzati (form, WhatsApp, click fornitori)</td>
+          <td class="text-right font-medium">&euro; 100,00</td>
+        </tr>
+        <tr>
+          <td><strong>SEO e ottimizzazione</strong></td>
+          <td>Meta tag, Open Graph, Schema.org LocalBusiness, sitemap, robots.txt, keywords locali (Chieti, Lanciano, Vasto, Ortona, Isernia, Campobasso, Termoli)</td>
+          <td class="text-right font-medium">&euro; 150,00</td>
+        </tr>
+        <tr>
+          <td><strong>Sicurezza</strong></td>
+          <td>HTTPS/HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, honeypot anti-bot, rate limiting</td>
+          <td class="text-right font-medium">&euro; 100,00</td>
+        </tr>
+        <tr>
+          <td><strong>Hosting e migrazione</strong></td>
+          <td>Deploy su Vercel (piano gratuito, CDN globale, SSL incluso). Migrazione DNS da Aruba a Vercel — il dominio resta su Aruba (~&euro;10-12 +IVA/anno), si elimina il piano hosting Aruba (risparmio di ~&euro;30 +IVA/anno dal 2&deg; anno in poi). Configurazione e verifica.</td>
+          <td class="text-right font-medium">&euro; 100,00</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- TOTALE -->
+    <div class="totale">
+      <div class="label">Totale Progetto</div>
+      <div class="value">&euro; 1.550,00</div>
+    </div>
+
+    <!-- UPGRADE OPZIONALE -->
+    <h3>Upgrade opzionale</h3>
+    <table class="extras">
+      <tbody>
+        <tr>
+          <td style="width: 65%"><strong>Blog con CMS Sanity</strong> — Pannello gestione contenuti, editor visuale, immagini inline e affiancate, categorie, autori, condivisione social (7 piattaforme). Attivabile in qualsiasi momento.</td>
+          <td class="text-right font-medium">&euro; 300,00</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CANONE E EXTRA -->
+    <h3>Canone e interventi</h3>
+    <table class="extras">
+      <tbody>
+        <tr>
+          <td style="width: 65%"><strong>Canone annuale di mantenimento</strong> (dal 2&deg; anno) — aggiornamenti sicurezza, backup, supporto base. Hosting Vercel gratuito; dominio Aruba (~&euro;10-12 +IVA/anno) a carico del cliente.</td>
+          <td class="text-right font-medium">&euro; 300,00/anno</td>
+        </tr>
+        <tr>
+          <td><strong>Interventi extra</strong> (su richiesta) — modifiche, nuove funzionalit&agrave;, consulenza</td>
+          <td class="text-right font-medium">&euro; 25–35/ora</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CONDIZIONI -->
+    <h3>Condizioni</h3>
+    <div class="cond-grid">
+      <div class="cond-box">
+        <div class="title">Pagamento</div>
+        <p>Alla consegna del progetto</p>
+      </div>
+      <div class="cond-box">
+        <div class="title">Tempi di consegna</div>
+        <p>3–4 settimane dalla conferma</p>
+      </div>
+      <div class="cond-box">
+        <div class="title">Revisioni</div>
+        <p>1 revisione grafica inclusa dopo la consegna. Revisioni aggiuntive a tariffa oraria.</p>
+      </div>
+      <div class="cond-box">
+        <div class="title">Propriet&agrave;</div>
+        <p>Codice sorgente su GitHub. Il cliente riceve accesso completo a repository e CMS.</p>
+      </div>
+    </div>
+
+    <!-- NOTA -->
+    <div class="note">
+      Questa &egrave; una <strong>bozza di lavoro</strong> — importi e voci sono indicativi
+      e da concordare insieme. Importi IVA esclusa. Il canone annuale include hosting,
+      aggiornamenti di sicurezza e supporto tecnico base.
+      Per una spiegazione completa di cosa fa il sito, c'&egrave; un documento a parte
+      ("Guida al Vostro Nuovo Sito Web") scritto in modo semplice e senza tecnicismi.
+    </div>
+
+    <p style="font-size: 11px; color: #6B6B6B; margin-top: 20px; line-height: 1.7;">
+     </p>
+
+    <div class="footer">
+      <p>Bozza PREV-2026-001 — 26 marzo 2026</p>
+    </div>
+  </div>
+</body>
+</html>

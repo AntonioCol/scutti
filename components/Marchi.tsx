@@ -39,15 +39,17 @@ export default function Marchi() {
           className="text-center"
         >
           <p className="text-xs tracking-[0.3em] uppercase text-[#EF8C00] font-medium mb-4">
-            I nostri partner
+            Solo i migliori, tutti in un unico showroom
           </p>
           <h2 className="font-script text-5xl md:text-6xl font-normal text-[#2B2B2B]">
             I <span className="font-script">Marchi</span>
           </h2>
           <div className="w-12 h-[1px] bg-[#EF8C00] mx-auto mt-6" />
           <p className="text-[#6B6B6B] mt-6 max-w-xl mx-auto text-sm leading-relaxed">
-            Selezioniamo solo i brand più prestigiosi del panorama
-            internazionale per garantire qualità, design e innovazione.
+            Porcellanosa, Jacuzzi, Villeroy &amp; Boch, Gessi e molti altri — marchi
+            che altrove richiederebbero ore di viaggio. Da Scutti li trovi tutti
+            a <strong className="text-dark">Villa Santa Maria (Chieti)</strong>,
+            con i prezzi di un rivenditore autorizzato.
           </p>
         </motion.div>
       </div>
@@ -103,7 +105,7 @@ export default function Marchi() {
 
       {/* Modal avvertimento uscita sito */}
       <Dialog open={!!selected} onOpenChange={(open) => !open && setSelected(null)}>
-        <DialogContent className="max-w-sm text-center">
+        <DialogContent className="max-w-2xl text-center">
           {selected && (
             <>
               <div className="flex justify-center mb-2">

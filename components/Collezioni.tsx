@@ -32,12 +32,16 @@ export default function Collezioni() {
           className="text-center mb-16"
         >
           <p className="text-xs tracking-[0.3em] uppercase text-[#EF8C00] font-medium mb-4">
-            Il nostro catalogo
+            Pavimenti, arredo bagno, ceramiche e molto altro
           </p>
           <h2 className="font-script text-5xl md:text-6xl font-normal text-white">
             Le <span className="font-script">Collezioni</span>
           </h2>
           <div className="w-12 h-[1px] bg-[#EF8C00] mx-auto mt-6" />
+          <p className="text-white/60 mt-6 max-w-xl mx-auto text-sm leading-relaxed">
+            12 categorie di prodotto, oltre 60 fornitori. Scegli la collezione che ti interessa
+            e <strong className="text-white/80">richiedi un preventivo gratuito</strong> — ti rispondiamo entro 24 ore.
+          </p>
         </motion.div>
 
         {/* Grid */}
@@ -136,7 +140,7 @@ export default function Collezioni() {
 
       {/* Modal avvertimento uscita sito */}
       <Dialog open={!!exitLink} onOpenChange={(open) => !open && setExitLink(null)}>
-        <DialogContent className="max-w-sm text-center">
+        <DialogContent className="max-w-2xl text-center">
           {exitLink && (
             <>
               <div className="flex justify-center mb-2">

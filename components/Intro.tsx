@@ -21,24 +21,28 @@ export default function Intro() {
           transition={{ duration: 0.8 }}
         >
           <p className="text-xs tracking-[0.3em] uppercase text-[#EF8C00] font-medium mb-4">
-            Chi siamo
+            Perch&eacute; scegliere Scutti
           </p>
           <h2 className="font-script text-5xl md:text-6xl font-normal leading-tight mb-8 text-[#2B2B2B]">
-            Trasformiamo
+            Non un negozio.
             <br />
-            <span className="font-script">gli spazi in emozioni</span>
+            <span className="font-script">Il tuo consulente.</span>
           </h2>
           <p className="text-[#6B6B6B] leading-relaxed mb-6 text-base">
-            Scutti Gilberto S.r.l. è il punto di riferimento in Abruzzo per
-            chi vuole realizzare interni di qualità. Dal 1970 selezioniamo
-            i migliori brand internazionali per offrire soluzioni complete:
-            dall&apos;arredo bagno ai pavimenti, dai camini alle porte.
+            Stai ristrutturando casa o costruendo da zero? <strong className="text-dark">Non scegliere da un catalogo online.</strong> Nel
+            nostro showroom di 1.200 m² a Villa Santa Maria (Chieti) tocchi con mano
+            pavimenti, ceramiche, sanitari e rubinetterie dei migliori marchi
+            internazionali — e un consulente dedicato ti segue dalla scelta
+            dei materiali fino alla posa.
           </p>
-          <p className="text-[#6B6B6B] leading-relaxed mb-10 text-base">
-            Nel nostro showroom di oltre 1.200 m² a Villa Santa Maria potrete
-            toccare con mano materiali, texture e finiture, accompagnati
-            da un team di professionisti pronti a seguirvi in ogni fase
-            del progetto.
+          <p className="text-[#6B6B6B] leading-relaxed mb-4 text-base">
+            <strong className="text-dark">Oltre 60 brand, un unico interlocutore.</strong> Invece
+            di girare tra cinque rivenditori diversi, da Scutti trovi tutto: arredo bagno,
+            pavimenti, parquet, camini, stufe, mosaici e molto altro. Con un preventivo
+            chiaro, senza sorprese.
+          </p>
+          <p className="text-[#EF8C00] leading-relaxed mb-10 text-sm font-medium">
+            Serviamo tutta la provincia di Chieti, l&apos;Abruzzo e il Molise. Preventivo gratuito e senza impegno.
           </p>
 
           {/* Stats */}
@@ -67,7 +71,7 @@ export default function Intro() {
           <div className="relative h-[520px] w-full overflow-hidden">
             <Image
               src="/img/showroom/scutti_showroom_1.jpg"
-              alt="Showroom Scutti"
+              alt="Showroom arredo bagno e ceramiche Scutti — Villa Santa Maria, Chieti"
               fill
               className="object-cover"
             />

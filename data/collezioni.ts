@@ -291,12 +291,12 @@ export const marchi = [
 // Showroom & Hero
 // ---------------------------------------------------------------------------
 export const showroomImages = [
-  { src: "/img/showroom/scutti_showroom_1.jpg", alt: "Showroom Scutti", span: "col-span-2 row-span-2" },
-  { src: "/img/showroom/scutti_showroom_2.jpg", alt: "Showroom Scutti", span: "" },
-  { src: "/img/showroom/scutti_showroom_3.jpg", alt: "Showroom Scutti", span: "" },
-  { src: "/img/showroom/scutti_showroom_4.jpg", alt: "Showroom Scutti", span: "" },
-  { src: "/img/showroom/scutti_showroom_5.jpg", alt: "Showroom Scutti", span: "" },
-  { src: "/img/showroom/scutti_showroom_6.jpg", alt: "Showroom Scutti", span: "" },
+  { src: "/img/showroom/scutti_showroom_1.jpg", alt: "Showroom pavimenti e arredo bagno Scutti — Villa Santa Maria, Chieti", span: "col-span-2 row-span-2" },
+  { src: "/img/showroom/scutti_showroom_2.jpg", alt: "Esposizione ceramiche e rivestimenti Scutti Abruzzo", span: "" },
+  { src: "/img/showroom/scutti_showroom_3.jpg", alt: "Sanitari e rubinetterie in esposizione — showroom Scutti Chieti", span: "" },
+  { src: "/img/showroom/scutti_showroom_4.jpg", alt: "Arredo bagno marchi internazionali — Scutti Villa Santa Maria", span: "" },
+  { src: "/img/showroom/scutti_showroom_5.jpg", alt: "Pavimenti parquet e laminati in esposizione Scutti Abruzzo", span: "" },
+  { src: "/img/showroom/scutti_showroom_6.jpg", alt: "Showroom camini e stufe Scutti — provincia di Chieti", span: "" },
 ];
 
 export const heroImages = [

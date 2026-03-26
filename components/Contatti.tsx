@@ -79,9 +79,24 @@ function validate(form: { nome: string; email: string; telefono: string; messagg
   return errors;
 }
 
+// Rate limiting: max invii per sessione
+const RATE_LIMIT_MAX = 3;
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minuto
+const submitTimestamps: number[] = [];
+
+function isRateLimited(): boolean {
+  const now = Date.now();
+  // Rimuovi invii più vecchi della finestra
+  while (submitTimestamps.length > 0 && now - submitTimestamps[0] > RATE_LIMIT_WINDOW) {
+    submitTimestamps.shift();
+  }
+  return submitTimestamps.length >= RATE_LIMIT_MAX;
+}
+
 export default function Contatti() {
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({ nome: "", email: "", telefono: "", messaggio: "" });
+  const [honeypot, setHoneypot] = useState(""); // campo nascosto anti-bot
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
 
@@ -102,10 +117,22 @@ export default function Contatti() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Honeypot: se compilato è un bot
+    if (honeypot) return;
+
+    // Rate limiting
+    if (isRateLimited()) {
+      setErrors({ nome: "Troppi invii. Riprova tra un minuto." });
+      return;
+    }
+
     const allErrors = validate(form);
     setErrors(allErrors);
     setTouched({ nome: true, email: true, telefono: true, messaggio: true });
     if (Object.keys(allErrors).length > 0) return;
+
+    submitTimestamps.push(Date.now());
     trackFormSubmit();
     setSent(true);
   };
@@ -122,12 +149,17 @@ export default function Contatti() {
           className="text-center mb-16"
         >
           <p className="text-xs tracking-[0.3em] uppercase text-primary font-medium mb-4">
-            Siamo a tua disposizione
+            Preventivo gratuito e senza impegno
           </p>
           <h2 className="font-script text-5xl md:text-6xl font-normal text-dark">
-            <span className="font-script">Contattaci</span>
+            <span className="font-script">Parlaci del tuo progetto</span>
           </h2>
           <div className="w-12 h-[1px] bg-primary mx-auto mt-6" />
+          <p className="text-midgray mt-6 max-w-xl mx-auto text-sm leading-relaxed">
+            Ristrutturazione, nuova costruzione o semplicemente un bagno da rifare?
+            Scrivici o chiamaci — <strong className="text-dark">ti rispondiamo entro 24 ore</strong> con
+            un preventivo dettagliato. Nessun obbligo, nessun costo.
+          </p>
         </motion.div>
 
         {/* Info + Orari row */}
@@ -207,10 +239,10 @@ export default function Contatti() {
           >
             <div className="bg-white border border-[#e0dbd3] shadow-lg shadow-black/5 p-8 md:p-10">
               <p className="text-xs tracking-[0.2em] uppercase text-primary font-medium mb-1">
-                Richiedi informazioni
+                Richiedi un preventivo gratuito
               </p>
               <h3 className="font-script text-2xl text-dark mb-6">
-                Scrivici un messaggio
+                Raccontaci cosa cerchi
               </h3>
 
               {sent ? (
@@ -226,6 +258,17 @@ export default function Contatti() {
               ) : (
                 <TooltipProvider>
                 <form onSubmit={handleSubmit} className="space-y-5">
+                  {/* Honeypot anti-bot: campo nascosto, invisibile agli utenti */}
+                  <input
+                    type="text"
+                    name="website"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    autoComplete="off"
+                    tabIndex={-1}
+                    aria-hidden="true"
+                    className="absolute opacity-0 pointer-events-none h-0 w-0 overflow-hidden"
+                  />
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <div className="flex items-center gap-1.5 mb-1">
@@ -304,12 +347,12 @@ export default function Contatti() {
                         <TooltipTrigger type="button" tabIndex={-1}>
                           <Info size={13} className="text-muted-foreground" />
                         </TooltipTrigger>
-                        <TooltipContent>Descrivi cosa stai cercando o richiedi un preventivo</TooltipContent>
+                        <TooltipContent>Descrivi il tuo progetto: cosa cerchi, metrature, tempistiche</TooltipContent>
                       </Tooltip>
                     </div>
                     <Textarea
                       id="messaggio"
-                      placeholder="Raccontaci cosa stai cercando..."
+                      placeholder="Es: Sto ristrutturando il bagno e cerco sanitari e pavimenti. La stanza è circa 8 m²..."
                       rows={5}
                       value={form.messaggio}
                       onChange={(e) => handleChange("messaggio", e.target.value)}
@@ -321,7 +364,7 @@ export default function Contatti() {
                     )}
                   </div>
                   <Button variant="dark" type="submit" className="w-full">
-                    Invia Messaggio
+                    Richiedi Preventivo Gratuito
                   </Button>
 
                   {/* Divider */}

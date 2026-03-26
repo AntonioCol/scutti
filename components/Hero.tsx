@@ -34,7 +34,7 @@ export default function Hero() {
         >
           <Image
             src={heroImages[current]}
-            alt="Scutti — Gli interni che desideri"
+            alt="Showroom arredo bagno e pavimenti Scutti — Chieti, Abruzzo"
             fill
             priority={current === 0}
             className="object-cover"
@@ -72,27 +72,28 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="text-xs tracking-[0.3em] uppercase mb-6 text-primary font-medium"
         >
-          Villa Santa Maria · Abruzzo · Dal 1970
+          Villa Santa Maria · Chieti · Abruzzo · Dal 1970
         </motion.p>
 
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="font-script text-6xl md:text-8xl font-normal leading-tight mb-6"
+          className="font-script text-5xl md:text-8xl font-normal leading-tight mb-6"
         >
-          Gli interni
+          Il tuo progetto
           <br />
-          <span className="font-script">che desideri</span>
+          <span className="font-script">inizia qui</span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-base md:text-lg text-white/80 mb-10 max-w-xl mx-auto leading-relaxed"
+          className="text-base md:text-lg text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed"
         >
-          Showroom di arredo bagno, pavimenti, ceramiche, camini, parquet e molto altro.
+          Arredo bagno, pavimenti, ceramiche, camini e parquet dei migliori marchi internazionali.
+          <strong className="text-white"> Preventivo gratuito</strong> per tutta la provincia di Chieti, Abruzzo e Molise.
         </motion.p>
 
         <motion.div
@@ -102,10 +103,10 @@ export default function Hero() {
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
           <Button asChild>
-            <a href="#collezioni">Scopri le Collezioni</a>
+            <a href="#contatti">Richiedi Preventivo Gratuito</a>
           </Button>
           <Button variant="outlineWhite" asChild>
-            <a href="#contatti">Contattaci</a>
+            <a href="#collezioni">Scopri le Collezioni</a>
           </Button>
         </motion.div>
       </div>

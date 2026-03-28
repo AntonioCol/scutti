@@ -106,7 +106,7 @@ export default function Hero() {
       </div>
 
       {/* Buttons fissi in basso */}
-      <div className="relative z-10 pb-10 md:pb-12 px-6">
+      <div className="relative z-10 pb-[43px] md:pb-12 px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

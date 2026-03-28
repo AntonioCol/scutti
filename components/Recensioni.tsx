@@ -5,31 +5,31 @@ import { Star } from "lucide-react";
 
 const recensioni = [
   {
-    nome: "Marco R.",
-    citta: "Lanciano",
+    nome: "Michele De Laurentiis",
+    citta: "",
     testo:
-      "Abbiamo rifatto completamente il bagno. Dalla scelta dei sanitari alla posa, ci hanno seguito in ogni fase. Risultato impeccabile e nei tempi previsti.",
+      "Vastissimo assortimento per l'edilizia, io ci vado per il pellet: ha molti buoni marchi, basta scelta anche di stufe.",
     stelle: 5,
   },
   {
-    nome: "Valentina D.",
-    citta: "Ortona",
+    nome: "Luigi Di Nunzio",
+    citta: "",
     testo:
-      "Showroom incredibile, non pensavo di trovare tutti questi marchi in Abruzzo. Il personale è competente e ci ha consigliato senza pressione. Consigliatissimi.",
+      "Personale qualificato, disponibilità immediata, showroom ben fornito e con ottima visibilità, prezzi accessibili e con promozioni in corso. Consigliato.",
     stelle: 5,
   },
   {
-    nome: "Giuseppe L.",
-    citta: "Vasto",
+    nome: "Giancarlo Simongini",
+    citta: "",
     testo:
-      "Parquet in tutta la casa, posato a regola d'arte. Prezzo competitivo rispetto a preventivi che avevamo chiesto altrove. Torneremo per il bagno.",
+      "Ottima attività, ben fornita di materiali, personale molto cordiale e disponibile. Consigliata.",
     stelle: 5,
   },
   {
-    nome: "Anna M.",
-    citta: "Chieti",
+    nome: "Joseph DL",
+    citta: "",
     testo:
-      "Professionalità e disponibilità. Ci hanno aiutato a scegliere i pavimenti per la ristrutturazione completa. Tutto perfetto, dalla consulenza in showroom alla consegna.",
+      "Grande disponibilità di prodotti. Personale gentile. Tempi di attesa nella norma.",
     stelle: 5,
   },
 ];
@@ -52,6 +52,14 @@ export default function Recensioni() {
             <span className="font-script">Recensioni</span>
           </h2>
           <div className="w-12 h-[1px] bg-primary mx-auto mt-6" />
+          <a
+            href="https://www.google.com/maps/place/Scutti+Gilberto+S.r.l./@41.9519,14.3517,17z"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-6 text-sm text-primary hover:underline"
+          >
+            Vedi tutte le 82 recensioni su Google →
+          </a>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -78,7 +86,7 @@ export default function Recensioni() {
               </p>
               <div className="mt-5 pt-4 border-t border-[#e0dbd3]">
                 <p className="text-sm font-medium text-dark">{r.nome}</p>
-                <p className="text-xs text-midgray">{r.citta}</p>
+                {r.citta && <p className="text-xs text-midgray">{r.citta}</p>}
               </div>
             </motion.div>
           ))}

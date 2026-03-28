@@ -1,76 +1,60 @@
-import {defineType, defineArrayMember} from 'sanity'
+import {defineType, defineArrayMember, defineField} from 'sanity'
 import {ImageIcon} from '@sanity/icons'
 
-/**
- * This is the schema type for block content used in the post document type
- * Importing this type into the studio configuration's `schema` property
- * lets you reuse it in other document types with:
- *  {
- *    name: 'someName',
- *    title: 'Some title',
- *    type: 'blockContent'
- *  }
- */
-
 export const blockContentType = defineType({
-  title: 'Block Content',
+  title: 'Contenuto articolo',
   name: 'blockContent',
   type: 'array',
+  description:
+    'Corpo dell’articolo. Dal menu «+»: paragrafi, titoli, immagine a tutta larghezza, oppure «Immagine + Testo» (metà o un terzo della riga, sinistra o destra).',
   of: [
     defineArrayMember({
       type: 'block',
-      // Styles let you define what blocks can be marked up as. The default
-      // set corresponds with HTML tags, but you can set any title or value
-      // you want, and decide how you want to deal with it where you want to
-      // use your content.
       styles: [
-        {title: 'Normal', value: 'normal'},
-        {title: 'H1', value: 'h1'},
-        {title: 'H2', value: 'h2'},
-        {title: 'H3', value: 'h3'},
-        {title: 'H4', value: 'h4'},
-        {title: 'Quote', value: 'blockquote'},
+        {title: 'Paragrafo normale', value: 'normal'},
+        {title: 'Titolo 1', value: 'h1'},
+        {title: 'Titolo 2 (sezione)', value: 'h2'},
+        {title: 'Titolo 3 (sottosezione)', value: 'h3'},
+        {title: 'Titolo 4', value: 'h4'},
+        {title: 'Citazione', value: 'blockquote'},
       ],
-      lists: [{title: 'Bullet', value: 'bullet'}],
-      // Marks let you mark up inline text in the Portable Text Editor
+      lists: [{title: 'Elenco puntato', value: 'bullet'}],
       marks: {
-        // Decorators usually describe a single property – e.g. a typographic
-        // preference or highlighting
         decorators: [
-          {title: 'Strong', value: 'strong'},
-          {title: 'Emphasis', value: 'em'},
+          {title: 'Grassetto', value: 'strong'},
+          {title: 'Corsivo', value: 'em'},
         ],
-        // Annotations can be any object structure – e.g. a link or a footnote.
         annotations: [
           {
-            title: 'URL',
+            title: 'Link al sito',
             name: 'link',
             type: 'object',
             fields: [
-              {
-                title: 'URL',
+              defineField({
+                title: 'Indirizzo (URL)',
                 name: 'href',
                 type: 'url',
-              },
+                description: 'Incolla l’indirizzo completo, incluso https://',
+              }),
             ],
           },
         ],
       },
     }),
-    // You can add additional types here. Note that you can't use
-    // primitive types such as 'string' and 'number' in the same array
-    // as a block type.
     defineArrayMember({
       type: 'image',
       icon: ImageIcon,
+      title: 'Immagine a tutta larghezza',
       options: {hotspot: true},
       fields: [
-        {
+        defineField({
           name: 'alt',
           type: 'string',
-          title: 'Alternative Text',
-        }
-      ]
+          title: 'Testo alternativo',
+          description:
+            'Cosa rappresenta l’immagine (obbligatorio per accessibilità). Se non compili, sul sito useremo un testo generico.',
+        }),
+      ],
     }),
     defineArrayMember({
       type: 'imageText',

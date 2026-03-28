@@ -56,7 +56,7 @@ export default function Navbar() {
             className="h-[24px] w-[24px] object-contain"
           />
           <span
-            className={`font-logo text-[24px] font-black tracking-[-0.05em] leading-none transition-colors duration-300 ${
+            className={`font-logo text-[24px] font-bold tracking-[-0.02em] leading-none transition-colors duration-300 ${
               scrolled || open ? "text-dark" : "text-white"
             }`}
           >

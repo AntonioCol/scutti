@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { showroomImages } from "@/data/collezioni";
+import { showroomImages, showroomExtraImages } from "@/data/collezioni";
 import { Button } from "@/components/ui/button";
 
 export default function Showroom() {
@@ -57,9 +57,9 @@ export default function Showroom() {
 
         {/* Extra row with remaining showroom images */}
         <div className="grid grid-cols-2 gap-3 mt-3 h-[220px] md:h-[260px]">
-          {[7, 8].map((n, i) => (
+          {showroomExtraImages.map((img, i) => (
             <motion.div
-              key={n}
+              key={img.src}
               initial={{ opacity: 0, scale: 0.97 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.1 }}
@@ -67,8 +67,8 @@ export default function Showroom() {
               className="relative overflow-hidden group"
             >
               <Image
-                src={`/img/showroom/scutti_showroom_${n}.jpg`}
-                alt={`Showroom Scutti ${n}`}
+                src={img.src}
+                alt={img.alt}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />

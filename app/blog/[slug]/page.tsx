@@ -2,18 +2,19 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { getPost, getPostSlugs } from "@/sanity/queries";
+import { getPost, getAllPostsMeta } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
 import { ArrowLeft } from "lucide-react";
 import ShareButtons from "@/components/ShareButtons";
+import { SITE_URL } from "@/lib/site";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  const slugs = await getPostSlugs();
-  return slugs.map((slug) => ({ slug }));
+  const posts = await getAllPostsMeta();
+  return posts.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -21,22 +22,44 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await getPost(slug);
   if (!post) return {};
 
+  const canonical = `${SITE_URL}/blog/${slug}`;
+  const ogImage = post.mainImage
+    ? urlFor(post.mainImage).width(1200).height(630).url()
+    : undefined;
+
   return {
     title: post.title,
     description: post.excerpt,
+    authors: post.author?.name ? [{ name: post.author.name }] : undefined,
+    alternates: {
+      canonical,
+    },
     openGraph: {
+      url: canonical,
       title: post.title,
       description: post.excerpt,
       type: "article",
       publishedTime: post.publishedAt,
-      ...(post.mainImage && {
-        images: [{ url: urlFor(post.mainImage).width(1200).height(630).url() }],
+      modifiedTime: post._updatedAt ?? post.publishedAt,
+      ...(ogImage && {
+        images: [{ url: ogImage, width: 1200, height: 630 }],
       }),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      ...(ogImage && { images: [ogImage] }),
     },
   };
 }
 
 export const revalidate = 60;
+
+function imageAlt(text: string | undefined, fallback: string): string {
+  const t = text?.trim();
+  return t && t.length > 0 ? t : fallback;
+}
 
 // Render portable text blocks as simple HTML
 function renderBody(
@@ -46,34 +69,44 @@ function renderBody(
     children?: Array<{ text: string; marks?: string[] }>;
     style?: string;
     asset?: { _ref: string };
+    alt?: string;
     image?: { asset: { _ref: string }; alt?: string };
     text?: string;
+    imageWidth?: "half" | "third";
     imagePosition?: "left" | "right";
-  }>
+  }>,
+  articleTitle: string
 ) {
   return body.map((block) => {
-    // Blocco immagine + testo affiancati
+    // Blocco immagine + testo affiancati (metà o un terzo, sx o dx)
     if (block._type === "imageText" && block.image?.asset) {
       const isLeft = block.imagePosition !== "right";
+      const isThird = block.imageWidth === "third";
+      const imgW = isThird ? 400 : 600;
+      const imgH = isThird ? 300 : 400;
+      const imgColClass = isThird ? "w-full md:w-1/3 shrink-0" : "w-full md:w-1/2 shrink-0";
+      const textColClass = isThird
+        ? "w-full md:flex-1 md:min-w-0 md:w-2/3"
+        : "w-full md:w-1/2";
       return (
         <div
           key={block._key}
-          className={`my-10 flex flex-col md:flex-row gap-6 items-center ${
+          className={`my-10 flex flex-col md:flex-row gap-6 items-start ${
             !isLeft ? "md:flex-row-reverse" : ""
           }`}
         >
-          <div className="w-full md:w-1/2 shrink-0">
+          <div className={imgColClass}>
             <Image
               src={urlFor({ asset: { _ref: block.image.asset._ref } })
-                .width(600)
+                .width(imgW)
                 .url()}
-              alt={block.image.alt || ""}
-              width={600}
-              height={400}
+              alt={imageAlt(block.image.alt, `Immagine — ${articleTitle}`)}
+              width={imgW}
+              height={imgH}
               className="rounded-lg object-cover w-full"
             />
           </div>
-          <div className="w-full md:w-1/2">
+          <div className={textColClass}>
             <p className="leading-relaxed text-dark/80">{block.text}</p>
           </div>
         </div>
@@ -88,7 +121,7 @@ function renderBody(
             src={urlFor({ asset: { _ref: block.asset._ref } })
               .width(900)
               .url()}
-            alt=""
+            alt={imageAlt(block.alt, `Illustrazione articolo: ${articleTitle}`)}
             width={900}
             height={500}
             className="rounded-lg"
@@ -144,8 +177,42 @@ export default async function PostPage({ params }: Props) {
   const post = await getPost(slug);
   if (!post) notFound();
 
+  const canonical = `${SITE_URL}/blog/${slug}`;
+  const coverUrl = post.mainImage
+    ? urlFor(post.mainImage).width(1200).height(630).url()
+    : undefined;
+
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    ...(coverUrl && { image: [coverUrl] }),
+    datePublished: post.publishedAt,
+    dateModified: post._updatedAt ?? post.publishedAt,
+    author: post.author?.name
+      ? { "@type": "Person" as const, name: post.author.name }
+      : { "@type": "Organization" as const, name: "Scutti Gilberto S.r.l." },
+    publisher: {
+      "@type": "Organization",
+      name: "Scutti Gilberto S.r.l.",
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/img/logo.png`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": canonical,
+    },
+  };
+
   return (
     <div className="min-h-screen bg-sand">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       {/* Header */}
       <header className="bg-darkbg text-white">
         <div className="mx-auto max-w-3xl px-6 py-8">
@@ -157,7 +224,10 @@ export default async function PostPage({ params }: Props) {
             Tutti gli articoli
           </Link>
           {post.publishedAt && (
-            <time className="block text-sm text-white/50">
+            <time
+              dateTime={post.publishedAt}
+              className="block text-sm text-white/50"
+            >
               {new Date(post.publishedAt).toLocaleDateString("it-IT", {
                 day: "numeric",
                 month: "long",
@@ -175,7 +245,7 @@ export default async function PostPage({ params }: Props) {
           <div className="relative -mt-4 aspect-[16/9] overflow-hidden rounded-lg shadow-lg">
             <Image
               src={urlFor(post.mainImage).width(1200).height(675).url()}
-              alt={post.title}
+              alt={imageAlt(post.mainImage.alt, post.title)}
               fill
               priority
               className="object-cover"
@@ -186,14 +256,14 @@ export default async function PostPage({ params }: Props) {
 
       {/* Content */}
       <article className="mx-auto max-w-3xl px-6 py-12 font-serif text-lg">
-        {post.body && renderBody(post.body)}
+        {post.body && renderBody(post.body, post.title)}
       </article>
 
       {/* Share + Back link */}
       <div className="mx-auto max-w-3xl px-6 pb-16 space-y-8">
         <div className="border-t border-[#e0dbd3] pt-8">
           <ShareButtons
-            url={`https://www.scutti.it/blog/${slug}`}
+            url={`${SITE_URL}/blog/${slug}`}
             title={post.title}
             excerpt={post.excerpt}
           />

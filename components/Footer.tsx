@@ -26,7 +26,7 @@ export default function Footer() {
                 height={24}
                 className="h-[24px] w-[24px] object-contain"
               />
-              <span className="font-logo text-[24px] font-black tracking-[-0.05em] leading-none text-white">
+              <span className="font-logo text-[24px] font-bold tracking-[-0.02em] leading-none text-white">
                 Scutti
               </span>
             </div>

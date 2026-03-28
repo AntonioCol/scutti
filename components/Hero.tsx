@@ -17,6 +17,8 @@ export default function Hero() {
     return () => clearInterval(timer);
   }, []);
 
+  const slide = heroImages[current];
+
   return (
     <section
       id="home"
@@ -33,8 +35,8 @@ export default function Hero() {
           className="absolute inset-0"
         >
           <Image
-            src={heroImages[current]}
-            alt="Showroom arredo bagno e pavimenti Scutti — Chieti, Abruzzo"
+            src={slide.src}
+            alt={slide.alt}
             fill
             priority={current === 0}
             className="object-cover"

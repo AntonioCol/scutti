@@ -162,7 +162,7 @@ export default function Contatti() {
           </p>
         </motion.div>
 
-        {/* Info + Orari row */}
+        {/* Info + Orari row — su mobile: testi e icone centrati; da sm allineamento a sinistra */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -171,8 +171,8 @@ export default function Contatti() {
           className="grid md:grid-cols-2 gap-8 lg:gap-20 mb-12"
         >
           {/* Indirizzo + Telefono + Email */}
-          <div className="grid grid-cols-2 gap-6">
-            <div className="flex items-start gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 gap-y-6 text-center sm:text-left w-full max-w-md mx-auto md:max-w-none md:mx-0">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
               <MapPin size={18} className="text-primary mt-0.5 shrink-0" />
               <div>
                 <p className="text-sm font-medium text-dark">Indirizzo</p>
@@ -183,8 +183,8 @@ export default function Contatti() {
                 </p>
               </div>
             </div>
-            <div className="space-y-5">
-              <div className="flex items-start gap-4">
+            <div className="space-y-5 flex flex-col items-center sm:items-stretch">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
                 <Phone size={18} className="text-primary mt-0.5 shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-dark">Telefono</p>
@@ -199,7 +199,7 @@ export default function Contatti() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-start gap-4">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
                 <Mail size={18} className="text-primary mt-0.5 shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-dark">Email</p>
@@ -215,7 +215,7 @@ export default function Contatti() {
           </div>
 
           {/* Orari showroom */}
-          <div className="flex items-start gap-4">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left max-w-md mx-auto md:max-w-none md:mx-0 w-full">
             <Clock size={18} className="text-primary mt-0.5 shrink-0" />
             <div>
               <p className="text-sm font-medium text-dark">Orari showroom</p>
@@ -228,14 +228,15 @@ export default function Contatti() {
           </div>
         </motion.div>
 
-        {/* Form + Map row */}
-        <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
+        {/* Form + Map row — mappa centrata su mobile */}
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-20 w-full items-start">
           {/* Form card */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8 }}
+            className="w-full max-w-md mx-auto md:max-w-none md:mx-0"
           >
             <div className="bg-white border border-[#e0dbd3] shadow-lg shadow-black/5 p-8 md:p-10">
               <p className="text-xs tracking-[0.2em] uppercase text-primary font-medium mb-1">
@@ -398,13 +399,15 @@ export default function Contatti() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, delay: 0.2 }}
+            className="w-full max-w-md mx-auto md:max-w-none md:mx-0"
           >
-            <div className="min-h-[400px] h-full overflow-hidden">
+            <div className="min-h-[400px] h-full w-full overflow-hidden rounded-lg border border-[#e0dbd3] bg-[#e8e4dc] shadow-sm">
               <iframe
                 src="https://maps.google.com/maps?q=Scutti+Gilberto+Srl+Contrada+Poggio+25+66047+Villa+Santa+Maria+CH&t=&z=16&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="100%"
-                style={{ border: 0, minHeight: "400px" }}
+                className="block min-h-[400px] w-full"
+                style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

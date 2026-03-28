@@ -1,18 +1,15 @@
 import type { Metadata } from "next";
-import { MonteCarlo, Inter, Nunito_Sans, Lora } from "next/font/google";
+import { Playfair_Display, Inter, Lora } from "next/font/google";
 import Analytics from "@/components/Analytics";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-const montecarlo = MonteCarlo({
-  variable: "--font-montecarlo",
+/** Titoli: Playfair Display. */
+const playfairDisplay = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
-  weight: "400",
-});
-
-const nunitoSans = Nunito_Sans({
-  variable: "--font-nunito",
-  subsets: ["latin"],
-  weight: "900",
+  display: "swap",
+  weight: "variable",
 });
 
 const inter = Inter({
@@ -25,10 +22,8 @@ const lora = Lora({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://www.scutti.it";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
   title: {
     default:
       "Arredo Bagno, Pavimenti e Ceramiche Chieti e Abruzzo | Scutti dal 1970",
@@ -75,7 +70,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "it_IT",
-    url: siteUrl,
+    url: SITE_URL,
     siteName: "Scutti Gilberto S.r.l.",
     title:
       "Arredo Bagno, Pavimenti e Ceramiche Chieti | Scutti — Preventivo Gratuito",
@@ -99,7 +94,7 @@ export const metadata: Metadata = {
     images: ["/img/showroom/scutti_showroom_1.jpg"],
   },
   alternates: {
-    canonical: siteUrl,
+    canonical: SITE_URL,
   },
   robots: {
     index: true,
@@ -121,11 +116,11 @@ const jsonLd = {
   name: "Scutti Gilberto S.r.l.",
   description:
     "Showroom di arredo bagno, pavimenti, ceramiche, camini, parquet e molto altro in provincia di Chieti. Dal 1970 al servizio di Abruzzo e Molise. Preventivi gratuiti.",
-  url: siteUrl,
+  url: SITE_URL,
   telephone: ["+39 0872 944160", "+39 334 506 2792"],
   email: "info@scutti.it",
-  image: `${siteUrl}/img/showroom/scutti_showroom_1.jpg`,
-  logo: `${siteUrl}/img/logo.png`,
+  image: `${SITE_URL}/img/showroom/scutti_showroom_1.jpg`,
+  logo: `${SITE_URL}/img/logo.png`,
   foundingDate: "1970",
   address: {
     "@type": "PostalAddress",
@@ -188,7 +183,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="it" className={`${montecarlo.variable} ${inter.variable} ${nunitoSans.variable} ${lora.variable}`}>
+    <html lang="it" className={`${playfairDisplay.variable} ${inter.variable} ${lora.variable}`}>
       <head>
         <script
           type="application/ld+json"

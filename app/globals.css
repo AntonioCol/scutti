@@ -81,11 +81,13 @@ body {
 }
 
 @utility font-script {
-  font-family: var(--font-lora), serif;
+  font-family: var(--font-playfair), "Playfair Display", Georgia, "Times New Roman", serif;
+  font-feature-settings: "kern" 1, "liga" 1;
 }
 
 @utility font-logo {
-  font-family: var(--font-nunito), sans-serif;
+  font-family: var(--font-playfair), "Playfair Display", Georgia, "Times New Roman", serif;
+  font-feature-settings: "kern" 1, "liga" 1;
 }
 
 @utility font-serif {
@@ -102,7 +104,14 @@ body {
 }
 
 .animate-marquee {
-  animation: marquee 30s linear infinite;
+  /* Mobile: metà durata = scorrimento ~2× più veloce; da md stesso ritmo di prima */
+  animation: marquee 15s linear infinite;
+}
+
+@media (min-width: 768px) {
+  .animate-marquee {
+    animation-duration: 30s;
+  }
 }
 
 .animate-marquee:hover {

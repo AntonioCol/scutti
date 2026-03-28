@@ -59,7 +59,7 @@ export default function Collezioni() {
               {/* Image */}
               <Image
                 src={cat.immagine}
-                alt={cat.nome}
+                alt={cat.immagineAlt ?? cat.nome}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />

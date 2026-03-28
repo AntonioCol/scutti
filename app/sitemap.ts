@@ -1,30 +1,35 @@
 import type { MetadataRoute } from "next";
-import { getPostSlugs } from "@/sanity/queries";
+import { getAllPostsMeta } from "@/sanity/queries";
+import { SITE_URL } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = "https://www.scutti.it";
+  const posts = await getAllPostsMeta().catch(() => [] as Awaited<ReturnType<typeof getAllPostsMeta>>);
 
-  const slugs = await getPostSlugs().catch(() => [] as string[]);
-
-  const blogEntries: MetadataRoute.Sitemap = slugs.map((slug) => ({
-    url: `${siteUrl}/blog/${slug}`,
-    lastModified: new Date(),
+  const blogEntries: MetadataRoute.Sitemap = posts.map((p) => ({
+    url: `${SITE_URL}/blog/${p.slug}`,
+    lastModified: new Date(p.lastModified),
     changeFrequency: "weekly",
     priority: 0.7,
   }));
 
   return [
     {
-      url: siteUrl,
+      url: SITE_URL,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1,
     },
     {
-      url: `${siteUrl}/blog`,
+      url: `${SITE_URL}/blog`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/privacy`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
     },
     ...blogEntries,
   ];

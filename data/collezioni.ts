@@ -105,6 +105,8 @@ export interface Collezione {
   id: string;
   nome: string;
   immagine: string;
+  /** Testo alternativo SEO per l’immagine della card (se assente si usa `nome`). */
+  immagineAlt?: string;
   fornitori: CollezioneFornitoreRef[];
 }
 
@@ -299,11 +301,42 @@ export const showroomImages = [
   { src: "/img/showroom/scutti_showroom_6.jpg", alt: "Showroom camini e stufe Scutti — provincia di Chieti", span: "" },
 ];
 
-export const heroImages = [
-  "/img/wrapper/8.jpg",
-  "/img/wrapper/3.jpg",
-  "/img/wrapper/15.jpg",
-  "/img/wrapper/6.jpg",
-  "/img/wrapper/7.jpg",
-  "/img/wrapper/21.jpg",
+/** Slide hero: modifica `alt` qui per accessibilità e SEO (non passa da Sanity). */
+export const heroImages: { src: string; alt: string }[] = [
+  {
+    src: "/img/wrapper/8.jpg",
+    alt: "Ambientazione pavimenti e rivestimenti in showroom Scutti — Villa Santa Maria, Chieti",
+  },
+  {
+    src: "/img/wrapper/3.jpg",
+    alt: "Dettaglio ceramiche e superfici esposte — showroom Scutti Abruzzo",
+  },
+  {
+    src: "/img/wrapper/15.jpg",
+    alt: "Pietre naturali e rivestimenti in esposizione — Scutti Chieti",
+  },
+  {
+    src: "/img/wrapper/6.jpg",
+    alt: "Vasche & docce e arredo bagno in showroom — Scutti",
+  },
+  {
+    src: "/img/wrapper/7.jpg",
+    alt: "Ambientazione bagno e finiture — Scutti Villa Santa Maria",
+  },
+  {
+    src: "/img/wrapper/21.jpg",
+    alt: "Esposizione materiali e design d’interni — showroom Scutti",
+  },
+];
+
+/** Ulteriori foto showroom (seconda riga sotto la griglia principale). */
+export const showroomExtraImages: { src: string; alt: string }[] = [
+  {
+    src: "/img/showroom/scutti_showroom_7.jpg",
+    alt: "Dettaglio esposizione materiali e consulenza — showroom Scutti Chieti",
+  },
+  {
+    src: "/img/showroom/scutti_showroom_8.jpg",
+    alt: "Ambienti bagno e living in esposizione — Scutti Abruzzo",
+  },
 ];

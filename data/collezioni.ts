@@ -301,31 +301,43 @@ export const showroomImages = [
   { src: "/img/showroom/scutti_showroom_6.jpg", alt: "Showroom camini e stufe Scutti — provincia di Chieti", span: "" },
 ];
 
-/** Slide hero: modifica `alt` qui per accessibilità e SEO (non passa da Sanity). */
-export const heroImages: { src: string; alt: string }[] = [
+/** Slide hero: modifica `alt`, `titolo` e `sottotitolo` qui per ogni immagine. */
+export const heroImages: { src: string; alt: string; titolo: [string, string]; sottotitolo: string }[] = [
   {
     src: "/img/wrapper/8.jpg",
     alt: "Ambientazione pavimenti e rivestimenti in showroom Scutti — Villa Santa Maria, Chieti",
+    titolo: ["Il tuo progetto", "inizia qui"],
+    sottotitolo: "Dall’idea alla posa, ti accompagniamo in ogni scelta.",
   },
   {
     src: "/img/wrapper/3.jpg",
     alt: "Dettaglio ceramiche e superfici esposte — showroom Scutti Abruzzo",
+    titolo: ["Ogni superficie", "racconta una storia"],
+    sottotitolo: "Ceramiche e rivestimenti che trasformano uno spazio in un’emozione.",
   },
   {
     src: "/img/wrapper/15.jpg",
     alt: "Pietre naturali e rivestimenti in esposizione — Scutti Chieti",
+    titolo: ["La materia", "nella sua forma più pura"],
+    sottotitolo: "Pietre naturali che portano calore e carattere in ogni ambiente.",
   },
   {
     src: "/img/wrapper/6.jpg",
     alt: "Vasche & docce e arredo bagno in showroom — Scutti",
+    titolo: ["Il bagno", "che hai sempre desiderato"],
+    sottotitolo: "Vasche, docce e arredo bagno dei migliori marchi internazionali.",
   },
   {
     src: "/img/wrapper/7.jpg",
     alt: "Ambientazione bagno e finiture — Scutti Villa Santa Maria",
+    titolo: ["I dettagli", "fanno la differenza"],
+    sottotitolo: "Finiture, rubinetterie e accessori scelti con cura da oltre 50 anni.",
   },
   {
     src: "/img/wrapper/21.jpg",
     alt: "Esposizione materiali e design d’interni — showroom Scutti",
+    titolo: ["Tutto questo", "sotto un solo tetto"],
+    sottotitolo: "Uno showroom completo a Villa Santa Maria, cuore dell’Abruzzo.",
   },
 ];
 

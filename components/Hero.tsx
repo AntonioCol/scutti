@@ -77,26 +77,33 @@ export default function Hero() {
           Villa Santa Maria · Chieti · Abruzzo · Dal 1970
         </motion.p>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="font-script text-5xl md:text-8xl font-normal leading-tight mb-6"
-        >
-          Il tuo progetto
-          <br />
-          <span className="font-script">inizia qui</span>
-        </motion.h1>
+        <AnimatePresence mode="wait">
+          <motion.h1
+            key={`title-${current}`}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.7 }}
+            className="font-script text-5xl md:text-8xl font-normal leading-tight mb-6"
+          >
+            {slide.titolo[0]}
+            <br />
+            <span className="font-script">{slide.titolo[1]}</span>
+          </motion.h1>
+        </AnimatePresence>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-base md:text-lg text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed"
-        >
-          Arredo bagno, pavimenti, ceramiche, camini e parquet dei migliori marchi internazionali.
-          <strong className="text-white"> Preventivo gratuito</strong> per tutta la provincia di Chieti, Abruzzo e Molise.
-        </motion.p>
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={`sub-${current}`}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-base md:text-lg text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed"
+          >
+            {slide.sottotitolo}
+          </motion.p>
+        </AnimatePresence>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

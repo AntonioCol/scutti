@@ -47,20 +47,30 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
         {/* Logo */}
-        <a href="#home" className="flex items-center gap-2" onClick={close}>
-          <Image
-            src="/img/logo.png"
-            alt="Scutti"
-            width={24}
-            height={24}
-            className="h-[24px] w-[24px] object-contain"
-          />
+        <a href="#home" className="flex flex-col leading-none w-fit" onClick={close}>
+          <div className="flex items-end gap-1">
+            <Image
+              src="/img/logo.png"
+              alt="Scutti"
+              width={24}
+              height={24}
+              className="h-[24px] w-[24px] object-contain"
+            />
+            <span
+              className={`font-logo text-[30px] font-bold leading-none translate-y-[4px] transition-colors duration-300 ${
+                scrolled || open ? "text-dark" : "text-white"
+              }`}
+            >
+              Scutti
+            </span>
+          </div>
           <span
-            className={`font-logo text-[24px] font-bold tracking-[-0.02em] leading-none transition-colors duration-300 ${
-              scrolled || open ? "text-dark" : "text-white"
+            className={`hidden sm:block font-script text-[9px] font-normal mt-1 w-full transition-colors duration-300 ${
+              scrolled || open ? "text-midgray" : "text-white/70"
             }`}
+            style={{ textAlign: "justify", textAlignLast: "justify", textJustify: "inter-character" }}
           >
-            Scutti
+            Gli interni che desideri
           </span>
         </a>
 

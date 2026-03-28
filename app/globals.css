@@ -86,7 +86,7 @@ body {
 }
 
 @utility font-logo {
-  font-family: var(--font-playfair), "Playfair Display", Georgia, "Times New Roman", serif;
+  font-family: var(--font-nunito), "Nunito Sans", Arial, sans-serif;
   font-feature-settings: "kern" 1, "liga" 1;
 }
 

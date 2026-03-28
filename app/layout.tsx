@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter, Lora } from "next/font/google";
+import { Playfair_Display, Inter, Lora, Nunito_Sans } from "next/font/google";
 import Analytics from "@/components/Analytics";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
+
+const nunitoSans = Nunito_Sans({
+  variable: "--font-nunito",
+  subsets: ["latin"],
+  weight: "900",
+});
 
 /** Titoli: Playfair Display. */
 const playfairDisplay = Playfair_Display({
@@ -183,7 +189,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="it" className={`${playfairDisplay.variable} ${inter.variable} ${lora.variable}`}>
+    <html lang="it" className={`${playfairDisplay.variable} ${inter.variable} ${lora.variable} ${nunitoSans.variable}`}>
       <head>
         <script
           type="application/ld+json"

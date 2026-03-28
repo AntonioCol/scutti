@@ -18,20 +18,24 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <Image
-                src="/img/logo.png"
-                alt="Scutti"
-                width={24}
-                height={24}
-                className="h-[24px] w-[24px] object-contain"
-              />
-              <span className="font-logo text-[24px] font-bold tracking-[-0.02em] leading-none text-white">
-                Scutti
+            <div className="flex flex-col leading-none mb-4 w-fit">
+              <div className="flex items-end gap-1">
+                <Image
+                  src="/img/logo.png"
+                  alt="Scutti"
+                  width={24}
+                  height={24}
+                  className="h-[24px] w-[24px] object-contain"
+                />
+                <span className="font-logo text-[30px] font-bold leading-none translate-y-[4px] text-white">
+                  Scutti
+                </span>
+              </div>
+              <span className="font-script text-[9px] font-normal mt-1 w-full text-white/50" style={{ textAlign: "justify", textAlignLast: "justify", textJustify: "inter-character" }}>
+                Gli interni che desideri
               </span>
             </div>
             <p className="text-sm leading-relaxed text-white/50">
-              Gli interni che desideri.<br />
               Showroom a Villa Santa Maria (CH), Abruzzo.
             </p>
           </div>

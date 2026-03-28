@@ -68,7 +68,7 @@ export default function Navbar() {
             className={`font-script text-[9px] font-normal mt-1 w-full transition-colors duration-300 ${
               scrolled || open ? "text-midgray" : "text-white/70"
             }`}
-            style={{ textAlign: "justify", textAlignLast: "justify", textJustify: "inter-character" }}
+            style={{ letterSpacing: "0.18em", textAlign: "center" }}
           >
             Gli interni che desideri
           </span>

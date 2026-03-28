@@ -105,12 +105,12 @@ body {
 
 .animate-marquee {
   /* Mobile: metà durata = scorrimento ~2× più veloce; da md stesso ritmo di prima */
-  animation: marquee 15s linear infinite;
+  animation: marquee 7.5s linear infinite;
 }
 
 @media (min-width: 768px) {
   .animate-marquee {
-    animation-duration: 30s;
+    animation-duration: 15s;
   }
 }
 

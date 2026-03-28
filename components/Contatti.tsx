@@ -236,7 +236,7 @@ export default function Contatti() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8 }}
-            className="w-full max-w-md mx-auto md:max-w-none md:mx-0"
+            className="w-full"
           >
             <div className="bg-white border border-[#e0dbd3] shadow-lg shadow-black/5 p-8 md:p-10">
               <p className="text-xs tracking-[0.2em] uppercase text-primary font-medium mb-1">
@@ -399,7 +399,7 @@ export default function Contatti() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full max-w-md mx-auto md:max-w-none md:mx-0"
+            className="w-full"
           >
             <div className="min-h-[400px] h-full w-full overflow-hidden rounded-lg border border-[#e0dbd3] bg-[#e8e4dc] shadow-sm">
               <iframe

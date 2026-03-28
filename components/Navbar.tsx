@@ -65,7 +65,7 @@ export default function Navbar() {
             </span>
           </div>
           <span
-            className={`hidden sm:block font-script text-[9px] font-normal mt-1 w-full transition-colors duration-300 ${
+            className={`font-script text-[9px] font-normal mt-1 w-full transition-colors duration-300 ${
               scrolled || open ? "text-midgray" : "text-white/70"
             }`}
             style={{ textAlign: "justify", textAlignLast: "justify", textJustify: "inter-character" }}

@@ -84,7 +84,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.7 }}
-            className="font-script text-5xl md:text-8xl font-normal leading-tight mb-6"
+            className="font-script text-3xl md:text-6xl font-normal leading-tight mb-6"
           >
             {slide.titolo[0]}
             <br />

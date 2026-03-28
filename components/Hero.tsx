@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown } from "lucide-react";
 import { heroImages } from "@/data/collezioni";
 import { Button } from "@/components/ui/button";
 
@@ -22,7 +21,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative h-screen w-full overflow-hidden flex items-center justify-center"
+      className="relative h-screen w-full overflow-hidden flex flex-col"
     >
       {/* Slideshow */}
       <AnimatePresence mode="sync">
@@ -47,18 +46,15 @@ export default function Hero() {
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/65 z-10" />
 
-      {/* Dots – verticali a sinistra su desktop, orizzontali in basso su mobile */}
-      <div className="absolute z-20
-        bottom-20 left-1/2 -translate-x-1/2 flex flex-row gap-1.5
-        md:left-6 md:top-1/2 md:bottom-auto md:-translate-y-1/2 md:translate-x-0 md:flex-col"
-      >
+      {/* Dots – sempre verticali a sinistra */}
+      <div className="absolute z-20 left-4 md:left-6 top-1/2 -translate-y-1/2 flex flex-col gap-1.5">
         {heroImages.map((_, i) => (
           <button
             key={i}
             onClick={() => setCurrent(i)}
             className={`rounded-full transition-all duration-300 ${
               i === current
-                ? "bg-primary w-1.5 h-4 md:w-1.5 md:h-4"
+                ? "bg-primary w-1.5 h-4"
                 : "bg-white/40 w-1.5 h-1.5"
             }`}
             aria-label={`Slide ${i + 1}`}
@@ -66,17 +62,20 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 text-center text-white px-6 max-w-4xl mx-auto">
+      {/* Tagline fissa sotto il menu */}
+      <div className="relative z-10 text-center text-white px-6 pt-[calc(4rem+1.5rem)] md:pt-[calc(5rem+1.5rem)]">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-xs tracking-[0.3em] uppercase mb-6 text-primary font-medium"
+          className="text-xs tracking-[0.3em] uppercase text-primary font-medium"
         >
           Villa Santa Maria · Chieti · Abruzzo · Dal 1970
         </motion.p>
+      </div>
 
+      {/* Testi animati — occupano lo spazio centrale */}
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center text-white px-6">
         <AnimatePresence mode="wait">
           <motion.h1
             key={`title-${current}`}
@@ -84,7 +83,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.7 }}
-            className="font-script text-3xl md:text-6xl font-normal leading-tight mb-6"
+            className="font-script text-5xl md:text-8xl font-normal leading-tight mb-6"
           >
             {slide.titolo[0]}
             <br />
@@ -99,12 +98,15 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-base md:text-lg text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed"
+            className="text-base md:text-lg text-white/80 max-w-2xl mx-auto leading-relaxed"
           >
             {slide.sottotitolo}
           </motion.p>
         </AnimatePresence>
+      </div>
 
+      {/* Buttons fissi in basso */}
+      <div className="relative z-10 pb-10 md:pb-12 px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -119,21 +121,6 @@ export default function Hero() {
           </Button>
         </motion.div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.8, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-white/50"
-      >
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5 }}
-        >
-          <ChevronDown size={18} />
-        </motion.div>
-      </motion.div>
     </section>
   );
 }

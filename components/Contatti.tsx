@@ -139,7 +139,7 @@ export default function Contatti() {
 
   return (
     <section id="contatti" className="py-24 md:py-32 bg-sand">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -229,7 +229,7 @@ export default function Contatti() {
         </motion.div>
 
         {/* Form + Map row — mappa centrata su mobile */}
-        <div className="grid md:grid-cols-2 gap-12 lg:gap-20 w-full items-start">
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-20 w-full items-stretch">
           {/* Form card */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -238,7 +238,7 @@ export default function Contatti() {
             transition={{ duration: 0.8 }}
             className="w-full"
           >
-            <div className="bg-white border border-[#e0dbd3] shadow-lg shadow-black/5 p-8 md:p-10">
+            <div className="bg-white border border-[#e0dbd3] shadow-lg shadow-black/5 p-5 md:p-10">
               <p className="text-xs tracking-[0.2em] uppercase text-primary font-medium mb-1">
                 Richiedi un preventivo gratuito
               </p>
@@ -399,14 +399,14 @@ export default function Contatti() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full"
+            className="w-full h-full flex flex-col"
           >
-            <div className="min-h-[400px] h-full w-full overflow-hidden rounded-lg border border-[#e0dbd3] bg-[#e8e4dc] shadow-sm">
+            <div className="flex-1 min-h-[300px] w-full overflow-hidden rounded-lg border border-[#e0dbd3] bg-[#e8e4dc] shadow-sm">
               <iframe
                 src="https://maps.google.com/maps?q=Scutti+Gilberto+Srl+Contrada+Poggio+25+66047+Villa+Santa+Maria+CH&t=&z=16&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="100%"
-                className="block min-h-[400px] w-full"
+                className="block h-full min-h-[300px] w-full"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"

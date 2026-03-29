@@ -4,9 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { getPost, getAllPostsMeta } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
-import { ArrowLeft } from "lucide-react";
 import ShareButtons from "@/components/ShareButtons";
 import { SITE_URL } from "@/lib/site";
+import Navbar from "@/components/Navbar";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -213,20 +213,15 @@ export default async function PostPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
-      {/* Header */}
-      <header className="bg-darkbg text-white">
-        <div className="mx-auto max-w-3xl px-6 py-8">
-          <Link
-            href="/blog"
-            className="mb-6 inline-flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Tutti gli articoli
-          </Link>
+      <Navbar />
+      <div className="fixed top-0 left-0 right-0 h-16 sm:h-20 bg-[#2B2B2B] z-40" />
+      {/* Intestazione articolo */}
+      <header className="bg-[#2B2B2B] text-white pt-24 sm:pt-28 pb-10">
+        <div className="mx-auto max-w-3xl px-6">
           {post.publishedAt && (
             <time
               dateTime={post.publishedAt}
-              className="block text-sm text-white/50"
+              className="block text-sm text-white/50 mt-4"
             >
               {new Date(post.publishedAt).toLocaleDateString("it-IT", {
                 day: "numeric",

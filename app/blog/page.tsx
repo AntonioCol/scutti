@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getPosts } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
-import { ArrowLeft } from "lucide-react";
+import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -18,25 +18,23 @@ export default async function BlogPage() {
 
   return (
     <div className="min-h-screen bg-sand">
-      {/* Header */}
-      <header className="bg-darkbg text-white">
-        <div className="mx-auto max-w-6xl px-6 py-8">
-          <Link
-            href="/"
-            className="mb-6 inline-flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Torna al sito
-          </Link>
-          <h1 className="font-logo text-4xl md:text-5xl">Blog</h1>
-          <p className="mt-2 font-serif text-lg text-white/70">
-            Novità, tendenze e consigli dal mondo dell&apos;arredo
+      <Navbar />
+      <div className="fixed top-0 left-0 right-0 h-16 sm:h-20 bg-[#2B2B2B] z-40" />
+      {/* Intestazione pagina — stile privacy */}
+      <div className="h-16 sm:h-20" />
+      <main className="bg-sand pt-12 pb-24">
+        <div className="max-w-6xl mx-auto px-6 mb-16">
+          <p className="text-xs tracking-[0.3em] uppercase text-primary font-medium mb-4">
+            Idee, tendenze e consigli
           </p>
+          <h1 className="font-script text-4xl md:text-5xl text-dark mb-8">
+            Articoli & Ispirazione
+          </h1>
+          <div className="w-12 h-[1px] bg-primary" />
         </div>
-      </header>
 
-      {/* Posts grid */}
-      <main className="mx-auto max-w-6xl px-6 py-16">
+        {/* Posts grid */}
+        <div className="mx-auto max-w-6xl px-6">
         {posts.length === 0 ? (
           <p className="text-center text-midgray">
             Nessun articolo pubblicato ancora. Torna presto!
@@ -82,6 +80,7 @@ export default async function BlogPage() {
             ))}
           </div>
         )}
+        </div>
       </main>
     </div>
   );

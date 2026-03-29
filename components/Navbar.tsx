@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -16,14 +17,36 @@ const links = [
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const href = (anchor: string) => (isHome ? anchor : `/${anchor}`);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
+    setScrolled(window.scrollY > 60);
     const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Traccia sezione attiva sulla home
+  useEffect(() => {
+    if (!isHome) return;
+    const ids = ["home", "collezioni", "marchi", "showroom", "contatti"];
+    const observers = ids.map((id) => {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActiveSection(id); },
+        { threshold: 0.3, rootMargin: "-60px 0px 0px 0px" }
+      );
+      obs.observe(el);
+      return obs;
+    });
+    return () => observers.forEach((o) => o?.disconnect());
+  }, [isHome]);
 
   // Blocca lo scroll del body quando il menu è aperto
   useEffect(() => {
@@ -47,7 +70,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
         {/* Logo */}
-        <a href="#home" className="flex flex-col leading-none w-fit" onClick={close}>
+        <a href={href("#home")} className="flex flex-col leading-none w-fit" onClick={close}>
           <div className="flex items-end gap-1">
             <Image
               src="/img/logo.png"
@@ -68,7 +91,7 @@ export default function Navbar() {
             className={`font-script text-[9px] font-normal mt-1 w-full transition-colors duration-300 ${
               scrolled || open ? "text-midgray" : "text-white/70"
             }`}
-            style={{ letterSpacing: "0.18em", textAlign: "center" }}
+            style={{ textAlign: "justify", textAlignLast: "justify", textJustify: "inter-character" }}
           >
             Gli interni che desideri
           </span>
@@ -76,19 +99,28 @@ export default function Navbar() {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8">
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className={`text-xs tracking-[0.15em] uppercase font-medium transition-colors duration-300 hover:text-primary ${
-                scrolled ? "text-dark" : "text-white"
-              }`}
-            >
-              {link.label}
-            </a>
-          ))}
+          {links.map((link) => {
+            const isActive = isHome && `#${activeSection}` === link.href;
+            return (
+              <a
+                key={link.href}
+                href={href(link.href)}
+                className={`relative text-xs tracking-[0.15em] uppercase font-medium transition-colors duration-300 hover:text-primary pb-1 ${
+                  scrolled ? "text-dark" : "text-white"
+                }`}
+              >
+                {link.label}
+                <motion.span
+                  className="absolute bottom-0 left-0 right-0 h-px bg-primary origin-center"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: isActive ? 1 : 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                />
+              </a>
+            );
+          })}
           <Button variant="outline" size="sm" asChild>
-            <a href="#contatti">Richiedi Appuntamento</a>
+            <a href={href("#contatti")}>Richiedi Appuntamento</a>
           </Button>
         </nav>
 
@@ -131,7 +163,7 @@ export default function Navbar() {
                 {links.map((link) => (
                   <a
                     key={link.href}
-                    href={link.href}
+                    href={href(link.href)}
                     onClick={close}
                     className="text-base tracking-[0.15em] uppercase font-medium text-dark hover:text-primary active:text-primary transition-colors border-b border-input pb-4 touch-manipulation"
                   >
@@ -139,7 +171,7 @@ export default function Navbar() {
                   </a>
                 ))}
                 <Button variant="outline" className="mt-2 py-4 text-center" asChild>
-                  <a href="#contatti" onClick={close}>
+                  <a href={href("#contatti")} onClick={close}>
                     Richiedi Appuntamento
                   </a>
                 </Button>

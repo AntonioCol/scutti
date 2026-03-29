@@ -19,7 +19,6 @@ export default async function BlogPage() {
   return (
     <div className="min-h-screen bg-sand">
       <Navbar />
-      <div className="fixed top-0 left-0 right-0 h-16 sm:h-20 bg-[#2B2B2B] z-40" />
       {/* Intestazione pagina — stile privacy */}
       <div className="h-16 sm:h-20" />
       <main className="bg-sand pt-12 pb-24">

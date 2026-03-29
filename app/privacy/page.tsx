@@ -12,8 +12,6 @@ export default function PrivacyPage() {
   return (
     <>
       <Navbar />
-      {/* Fascia scura fissa sotto la navbar — rende leggibili le scritte chiare */}
-      <div className="fixed top-0 left-0 right-0 h-16 sm:h-20 bg-[#2B2B2B] z-40" />
       <main className="bg-sand pt-28 sm:pt-32 pb-24">
         <div className="max-w-3xl mx-auto px-6">
           <p className="text-xs tracking-[0.3em] uppercase text-primary font-medium mb-4">

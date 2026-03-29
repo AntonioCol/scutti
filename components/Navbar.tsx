@@ -19,6 +19,7 @@ const links = [
 export default function Navbar() {
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const forceDark = !isHome;
   const href = (anchor: string) => (isHome ? anchor : `/${anchor}`);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -65,7 +66,7 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled || open ? "bg-sand shadow-sm" : "bg-transparent"
+        forceDark || scrolled || open ? "bg-sand shadow-sm" : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
@@ -81,7 +82,7 @@ export default function Navbar() {
             />
             <span
               className={`font-logo text-[30px] font-bold leading-none translate-y-[4px] transition-colors duration-300 ${
-                scrolled || open ? "text-dark" : "text-white"
+                forceDark || scrolled || open ? "text-dark" : "text-white"
               }`}
             >
               Scutti
@@ -89,7 +90,7 @@ export default function Navbar() {
           </div>
           <span
             className={`font-script text-[9px] font-normal mt-1 w-full transition-colors duration-300 ${
-              scrolled || open ? "text-midgray" : "text-white/70"
+              forceDark || scrolled || open ? "text-midgray" : "text-white/70"
             }`}
             style={{ textAlign: "justify", textAlignLast: "justify", textJustify: "inter-character" }}
           >
@@ -106,7 +107,7 @@ export default function Navbar() {
                 key={link.href}
                 href={href(link.href)}
                 className={`relative text-xs tracking-[0.15em] uppercase font-medium transition-colors duration-300 hover:text-primary pb-1 ${
-                  scrolled ? "text-dark" : "text-white"
+                  forceDark || scrolled ? "text-dark" : "text-white"
                 }`}
               >
                 {link.label}
@@ -128,7 +129,7 @@ export default function Navbar() {
         <button
           type="button"
           className={`md:hidden p-2 -mr-2 transition-colors duration-300 relative z-50 touch-manipulation ${
-            scrolled || open ? "text-dark" : "text-white"
+            forceDark || scrolled || open ? "text-dark" : "text-white"
           }`}
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "Chiudi menu" : "Apri menu"}

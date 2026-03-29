@@ -214,14 +214,13 @@ export default async function PostPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
       <Navbar />
-      <div className="fixed top-0 left-0 right-0 h-16 sm:h-20 bg-[#2B2B2B] z-40" />
       {/* Intestazione articolo */}
-      <header className="bg-[#2B2B2B] text-white pt-24 sm:pt-28 pb-10">
+      <header className="bg-sand pt-24 sm:pt-28 pb-10 border-b border-[#e0dbd3]">
         <div className="mx-auto max-w-3xl px-6">
           {post.publishedAt && (
             <time
               dateTime={post.publishedAt}
-              className="block text-sm text-white/50 mt-4"
+              className="block text-sm text-midgray mt-4"
             >
               {new Date(post.publishedAt).toLocaleDateString("it-IT", {
                 day: "numeric",

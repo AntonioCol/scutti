@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { getPost, getAllPostsMeta } from "@/sanity/queries";
+import { getPost, getAllPostsMeta, getAdjacentPosts } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import ShareButtons from "@/components/ShareButtons";
 import { SITE_URL } from "@/lib/site";
 import Navbar from "@/components/Navbar";
@@ -178,6 +178,7 @@ export default async function PostPage({ params }: Props) {
   const { slug } = await params;
   const post = await getPost(slug);
   if (!post) notFound();
+  const { prev, next } = await getAdjacentPosts(post.publishedAt);
 
   const canonical = `${SITE_URL}/blog/${slug}`;
   const coverUrl = post.mainImage
@@ -219,10 +220,18 @@ export default async function PostPage({ params }: Props) {
       {/* Intestazione articolo */}
       <header className="bg-sand pt-24 sm:pt-28 pb-10 border-b border-[#e0dbd3]">
         <div className="mx-auto max-w-3xl px-6">
+          {/* Breadcrumb */}
+          <nav aria-label="breadcrumb" className="flex items-center gap-1.5 text-xs text-midgray mt-4">
+            <Link href="/" className="hover:text-dark transition-colors">Home</Link>
+            <span>/</span>
+            <Link href="/blog" className="hover:text-dark transition-colors">Blog</Link>
+            <span>/</span>
+            <span className="text-dark truncate max-w-[200px] sm:max-w-xs">{post.title}</span>
+          </nav>
           {post.publishedAt && (
             <time
               dateTime={post.publishedAt}
-              className="block text-sm text-midgray mt-4"
+              className="block text-sm text-midgray mt-3"
             >
               {new Date(post.publishedAt).toLocaleDateString("it-IT", {
                 day: "numeric",
@@ -271,6 +280,38 @@ export default async function PostPage({ params }: Props) {
           <ArrowLeft className="h-4 w-4" />
           Torna al blog
         </Link>
+
+        {/* Navigazione prev/next */}
+        {(prev || next) && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-[#e0dbd3] pt-8">
+            {prev ? (
+              <Link
+                href={`/blog/${prev.slug}`}
+                className="group flex flex-col gap-1 rounded-lg border border-[#e0dbd3] bg-white p-4 hover:border-primary transition-colors"
+              >
+                <span className="text-xs text-midgray flex items-center gap-1">
+                  <ArrowLeft className="h-3 w-3" /> Articolo precedente
+                </span>
+                <span className="text-sm font-medium text-dark group-hover:text-primary transition-colors line-clamp-2">
+                  {prev.title}
+                </span>
+              </Link>
+            ) : <div />}
+            {next ? (
+              <Link
+                href={`/blog/${next.slug}`}
+                className="group flex flex-col gap-1 rounded-lg border border-[#e0dbd3] bg-white p-4 hover:border-primary transition-colors sm:text-right"
+              >
+                <span className="text-xs text-midgray flex items-center gap-1 sm:justify-end">
+                  Articolo successivo <ArrowRight className="h-3 w-3" />
+                </span>
+                <span className="text-sm font-medium text-dark group-hover:text-primary transition-colors line-clamp-2">
+                  {next.title}
+                </span>
+              </Link>
+            ) : <div />}
+          </div>
+        )}
       </div>
       <Footer />
     </div>

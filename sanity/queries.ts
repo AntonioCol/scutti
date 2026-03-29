@@ -55,6 +55,32 @@ export async function getPost(slug: string): Promise<Post | null> {
   );
 }
 
+/** Minimal post info for prev/next navigation. */
+export interface PostNav {
+  title: string;
+  slug: string;
+}
+
+export async function getAdjacentPosts(
+  publishedAt: string
+): Promise<{ prev: PostNav | null; next: PostNav | null }> {
+  const [prev, next] = await Promise.all([
+    client.fetch<PostNav | null>(
+      `*[_type == "post" && publishedAt < $publishedAt] | order(publishedAt desc)[0] {
+        title, "slug": slug.current
+      }`,
+      { publishedAt }
+    ),
+    client.fetch<PostNav | null>(
+      `*[_type == "post" && publishedAt > $publishedAt] | order(publishedAt asc)[0] {
+        title, "slug": slug.current
+      }`,
+      { publishedAt }
+    ),
+  ]);
+  return { prev, next };
+}
+
 export async function getAllPostsMeta(): Promise<PostListMeta[]> {
   return client.fetch(
     `*[_type == "post"] {

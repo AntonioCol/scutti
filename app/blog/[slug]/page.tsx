@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getPost, getAllPostsMeta } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
+import { ArrowLeft } from "lucide-react";
 import ShareButtons from "@/components/ShareButtons";
 import { SITE_URL } from "@/lib/site";
 import Navbar from "@/components/Navbar";

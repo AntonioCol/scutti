@@ -30,13 +30,22 @@ export interface PostListMeta {
   lastModified: string;
 }
 
-export async function getPosts(): Promise<Post[]> {
+const POSTS_PER_PAGE = 9;
+
+export async function getPosts(page = 1): Promise<Post[]> {
+  const start = (page - 1) * POSTS_PER_PAGE;
   return client.fetch(
-    `*[_type == "post"] | order(publishedAt desc) {
+    `*[_type == "post"] | order(publishedAt desc) [${start}...${start + POSTS_PER_PAGE}] {
       _id, title, slug, excerpt, mainImage, publishedAt
     }`
   );
 }
+
+export async function getPostsCount(): Promise<number> {
+  return client.fetch(`count(*[_type == "post"])`);
+}
+
+export { POSTS_PER_PAGE };
 
 export async function getPost(slug: string): Promise<Post | null> {
   return client.fetch(

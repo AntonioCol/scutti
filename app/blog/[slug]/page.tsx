@@ -8,6 +8,7 @@ import { ArrowLeft } from "lucide-react";
 import ShareButtons from "@/components/ShareButtons";
 import { SITE_URL } from "@/lib/site";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -271,6 +272,7 @@ export default async function PostPage({ params }: Props) {
           Torna al blog
         </Link>
       </div>
+      <Footer />
     </div>
   );
 }

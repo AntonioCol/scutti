@@ -4,6 +4,7 @@ import Image from "next/image";
 import { getPosts } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -81,6 +82,7 @@ export default async function BlogPage() {
         )}
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

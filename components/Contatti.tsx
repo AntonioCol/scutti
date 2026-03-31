@@ -95,6 +95,8 @@ function isRateLimited(): boolean {
 
 export default function Contatti() {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [serverError, setServerError] = useState("");
   const [form, setForm] = useState({ nome: "", email: "", telefono: "", messaggio: "" });
   const [honeypot, setHoneypot] = useState(""); // campo nascosto anti-bot
   const [errors, setErrors] = useState<Errors>({});
@@ -115,13 +117,14 @@ export default function Contatti() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setServerError("");
 
     // Honeypot: se compilato è un bot
     if (honeypot) return;
 
-    // Rate limiting
+    // Rate limiting (client)
     if (isRateLimited()) {
       setErrors({ nome: "Troppi invii. Riprova tra un minuto." });
       return;
@@ -132,9 +135,26 @@ export default function Contatti() {
     setTouched({ nome: true, email: true, telefono: true, messaggio: true });
     if (Object.keys(allErrors).length > 0) return;
 
-    submitTimestamps.push(Date.now());
-    trackFormSubmit();
-    setSent(true);
+    setSending(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, website: honeypot }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setServerError(data.error || "Errore nell'invio. Riprova.");
+        return;
+      }
+      submitTimestamps.push(Date.now());
+      trackFormSubmit();
+      setSent(true);
+    } catch {
+      setServerError("Errore di connessione. Riprova o contattaci direttamente.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -364,8 +384,11 @@ export default function Contatti() {
                       <p className="text-xs text-destructive mt-1">{errors.messaggio}</p>
                     )}
                   </div>
-                  <Button variant="dark" type="submit" className="w-full">
-                    Richiedi Preventivo Gratuito
+                  {serverError && (
+                    <p className="text-xs text-destructive text-center">{serverError}</p>
+                  )}
+                  <Button variant="dark" type="submit" className="w-full" disabled={sending}>
+                    {sending ? "Invio in corso…" : "Richiedi Preventivo Gratuito"}
                   </Button>
 
                   {/* Divider */}
